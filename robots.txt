@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /subscribers.json
+
+Sitemap: https://selfware.design/sitemap.xml

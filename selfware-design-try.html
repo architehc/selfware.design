@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0c0f08">
+<title>Try Selfware — selfware.design</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/vendor/xterm.min.css">
+<script src="/vendor/xterm.min.js"></script>
+<script src="/vendor/addon-fit.min.js"></script>
+<script src="/vendor/addon-web-links.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',monospace;overflow:hidden}
+
+/* ─── Header ─── */
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(212,163,115,0.1);background:rgba(12,15,8,0.95);position:relative;z-index:10}
+.header a{color:#D4A373;text-decoration:none;font-size:13px;letter-spacing:0.06em}
+.header a:hover{color:#e8e0d0}
+.logo{font-family:'Instrument Serif',Georgia,serif;font-size:18px;color:#e8e0d0;text-decoration:none!important}
+.logo:hover{color:#D4A373!important}
+.status-bar{display:flex;align-items:center;gap:16px;font-size:11px;color:#908878;letter-spacing:0.06em}
+.status-dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:4px}
+.status-dot.green{background:#606C38}
+.status-dot.yellow{background:#D4A373}
+.status-dot.red{background:#a33}
+.timer{color:#D4A373;font-variant-numeric:tabular-nums}
+
+/* ─── Auth Screen ─── */
+.auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 49px);padding:24px;text-align:center}
+.auth-title{font-family:'Instrument Serif',Georgia,serif;font-size:36px;color:#e8e0d0;margin-bottom:8px}
+.auth-sub{font-size:13px;color:#908878;margin-bottom:32px;max-width:420px;line-height:1.6}
+.auth-form{display:flex;gap:8px;margin-bottom:16px}
+.auth-form input{background:rgba(232,224,208,0.06);border:1px solid rgba(212,163,115,0.2);border-radius:8px;padding:10px 16px;color:#e8e0d0;font-family:'DM Mono',monospace;font-size:13px;width:260px;outline:none;transition:border-color 0.2s}
+.auth-form input:focus{border-color:rgba(212,163,115,0.5)}
+.auth-form input::placeholder{color:#6e6e5a}
+.auth-form button{background:#606C38;color:#fefae0;border:none;border-radius:8px;padding:10px 24px;font-family:'DM Mono',monospace;font-size:13px;cursor:pointer;letter-spacing:0.04em;transition:background 0.2s}
+.auth-form button:hover{background:#6e7d3e}
+.auth-form button:disabled{opacity:0.5;cursor:not-allowed}
+.auth-error{color:#c44;font-size:11px;height:16px;margin-top:4px}
+.auth-note{font-size:10px;color:#6e6e5a;margin-top:24px;max-width:360px;line-height:1.6}
+
+/* ─── Queue Screen ─── */
+.queue-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 49px);text-align:center}
+.queue-pos{font-size:64px;color:#D4A373;font-family:'Instrument Serif',Georgia,serif}
+.queue-label{font-size:13px;color:#908878;letter-spacing:0.08em;margin-top:8px}
+.queue-info{font-size:11px;color:#6e6e5a;margin-top:24px}
+
+/* ─── Terminal ─── */
+.terminal-wrap{height:calc(100vh - 49px);padding:4px;position:relative}
+.terminal-wrap .xterm{height:100%}
+.xterm-viewport::-webkit-scrollbar{width:6px}
+.xterm-viewport::-webkit-scrollbar-track{background:transparent}
+.xterm-viewport::-webkit-scrollbar-thumb{background:rgba(212,163,115,0.2);border-radius:3px}
+
+/* ─── Ended Overlay ─── */
+.ended-overlay{position:fixed;inset:0;background:rgba(12,15,8,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;text-align:center}
+.ended-overlay h2{font-family:'Instrument Serif',Georgia,serif;font-size:28px;color:#e8e0d0;margin-bottom:8px}
+.ended-overlay p{font-size:13px;color:#908878;margin-bottom:24px}
+.ended-overlay a{color:#D4A373;text-decoration:none;font-size:13px;border:1px solid rgba(212,163,115,0.3);border-radius:8px;padding:10px 24px;transition:background 0.2s}
+.ended-overlay a:hover{background:rgba(212,163,115,0.08)}
+
+/* ─── Loading ─── */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 49px)}
+.spinner{width:24px;height:24px;border:2px solid rgba(212,163,115,0.2);border-top-color:#D4A373;border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:12px;color:#908878;margin-top:12px;letter-spacing:0.06em}
+
+@media(max-width:600px){
+  .auth-form{flex-direction:column;align-items:center}
+  .auth-form input{width:100%;max-width:280px}
+  .auth-title{font-size:28px}
+  .header{padding:10px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="logo">selfware</a>
+  <div class="status-bar" id="status-bar">
+    <span id="session-status"></span>
+    <span id="timer" class="timer"></span>
+  </div>
+  <a href="/">← Back</a>
+</div>
+
+<div id="app"></div>
+
+<script>
+(function() {
+  const $ = (id) => document.getElementById(id);
+  const app = $("app");
+  const statusBar = $("session-status");
+  const timerEl = $("timer");
+
+  let state = "auth"; // auth | loading | queue | terminal | ended
+  let token = null;
+  let ws = null;
+  let term = null;
+  let fitAddon = null;
+  let sessionStart = null;
+  let timerInterval = null;
+  const SESSION_MAX = 15 * 60; // seconds
+
+  // ─── Render ─────────────────────────────────────────────────
+  function render() {
+    if (state === "auth") renderAuth();
+    else if (state === "loading") renderLoading();
+    else if (state === "queue") renderQueue();
+    else if (state === "terminal") renderTerminal();
+    else if (state === "ended") renderEnded();
+  }
+
+  function renderAuth() {
+    app.innerHTML = `
+      <div class="auth-screen">
+        <div class="auth-title">Try Selfware</div>
+        <div class="auth-sub">
+          Get an instant terminal with selfware pre-configured.
+          Analyze code, fix bugs, and see AI-driven development in action.
+        </div>
+        <form class="auth-form" id="auth-form">
+          <input type="email" id="email-input" placeholder="your@email.com" required autocomplete="email" />
+          <button type="submit" id="start-btn">START</button>
+        </form>
+        <div class="auth-error" id="auth-error"></div>
+        <div class="auth-note">
+          Session lasts 15 min. No signup required.<br>
+          Your email is only used for rate limiting.
+        </div>
+      </div>`;
+    $("auth-form").addEventListener("submit", handleStart);
+    $("email-input").focus();
+    statusBar.innerHTML = '<span class="status-dot green"></span> Ready';
+  }
+
+  function renderLoading() {
+    app.innerHTML = `
+      <div class="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Starting your container...</div>
+      </div>`;
+    statusBar.innerHTML = '<span class="status-dot yellow"></span> Starting';
+  }
+
+  function renderQueue() {
+    // position set externally
+  }
+
+  function showQueue(position) {
+    state = "queue";
+    app.innerHTML = `
+      <div class="queue-screen">
+        <div class="queue-pos">#${position}</div>
+        <div class="queue-label">IN QUEUE</div>
+        <div class="queue-info">All containers are in use. You'll be connected when a slot opens.</div>
+      </div>`;
+    statusBar.innerHTML = '<span class="status-dot yellow"></span> Queued';
+  }
+
+  function renderTerminal() {
+    app.innerHTML = '<div class="terminal-wrap" id="terminal-container"></div>';
+    statusBar.innerHTML = '<span class="status-dot green"></span> Connected';
+
+    term = new Terminal({
+      fontFamily: "'DM Mono', 'Menlo', 'DejaVu Sans Mono', monospace",
+      fontSize: 14,
+      lineHeight: 1.3,
+      cursorBlink: true,
+      cursorStyle: "bar",
+      theme: {
+        background: "#0c0f08",
+        foreground: "#e8e0d0",
+        cursor: "#D4A373",
+        cursorAccent: "#0c0f08",
+        selectionBackground: "rgba(212,163,115,0.3)",
+        black: "#1a1d14",
+        red: "#c44",
+        green: "#606C38",
+        yellow: "#D4A373",
+        blue: "#5a7a9a",
+        magenta: "#9a6a8a",
+        cyan: "#5a8a7a",
+        white: "#e8e0d0",
+        brightBlack: "#4a4d3a",
+        brightRed: "#e66",
+        brightGreen: "#7a8a4a",
+        brightYellow: "#e8c090",
+        brightBlue: "#7a9aba",
+        brightMagenta: "#ba8aaa",
+        brightCyan: "#7aaaa0",
+        brightWhite: "#fefae0",
+      },
+    });
+
+    fitAddon = new FitAddon.FitAddon();
+    const webLinksAddon = new WebLinksAddon.WebLinksAddon();
+    term.loadAddon(fitAddon);
+    term.loadAddon(webLinksAddon);
+
+    const container = $("terminal-container");
+    term.open(container);
+    fitAddon.fit();
+
+    // Send initial size
+    sendMsg({ type: "resize", cols: term.cols, rows: term.rows });
+
+    term.onData((data) => {
+      sendMsg({ type: "input", data });
+    });
+
+    term.onResize(({ cols, rows }) => {
+      sendMsg({ type: "resize", cols, rows });
+    });
+
+    window.addEventListener("resize", () => {
+      if (fitAddon) fitAddon.fit();
+    });
+
+    // Start countdown
+    sessionStart = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+
+    term.focus();
+  }
+
+  function renderEnded(reason) {
+    if (timerInterval) clearInterval(timerInterval);
+    timerEl.textContent = "";
+    statusBar.innerHTML = '<span class="status-dot red"></span> Ended';
+
+    const overlay = document.createElement("div");
+    overlay.className = "ended-overlay";
+    overlay.innerHTML = `
+      <h2>Session Ended</h2>
+      <p>${reason || "Your trial session has ended."}</p>
+      <a href="/">Back to selfware.design</a>
+      <br><br>
+      <a href="/try" style="border:none;font-size:11px;color:#908878">Start a new session</a>`;
+    document.body.appendChild(overlay);
+  }
+
+  // ─── Timer ──────────────────────────────────────────────────
+  function updateTimer() {
+    if (!sessionStart) return;
+    const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+    const remaining = Math.max(0, SESSION_MAX - elapsed);
+    const min = Math.floor(remaining / 60);
+    const sec = remaining % 60;
+    timerEl.textContent = `${min}:${String(sec).padStart(2, "0")}`;
+    if (remaining <= 60) timerEl.style.color = "#c44";
+  }
+
+  // ─── Auth ───────────────────────────────────────────────────
+  async function handleStart(e) {
+    e.preventDefault();
+    const email = $("email-input").value.trim();
+    const errEl = $("auth-error");
+    const btn = $("start-btn");
+
+    if (!email) { errEl.textContent = "Email required"; return; }
+
+    btn.disabled = true;
+    btn.textContent = "STARTING...";
+    errEl.textContent = "";
+
+    try {
+      const res = await fetch("/api/trial/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        errEl.textContent = data.error || "Failed to start session";
+        btn.disabled = false;
+        btn.textContent = "START";
+        return;
+      }
+
+      token = data.token;
+
+      if (data.queued) {
+        showQueue(data.position);
+        connectWS();
+      } else {
+        state = "loading";
+        render();
+        connectWS();
+      }
+    } catch (err) {
+      errEl.textContent = "Network error. Please try again.";
+      btn.disabled = false;
+      btn.textContent = "START";
+    }
+  }
+
+  // ─── WebSocket ──────────────────────────────────────────────
+  function connectWS() {
+    const proto = location.protocol === "https:" ? "wss:" : "ws:";
+    ws = new WebSocket(`${proto}//${location.host}/ws/terminal`);
+
+    ws.onopen = () => {
+      sendMsg({ type: "auth", token });
+    };
+
+    ws.onmessage = (event) => {
+      let msg;
+      try { msg = JSON.parse(event.data); } catch { return; }
+
+      switch (msg.type) {
+        case "ready":
+          if (state !== "terminal") {
+            state = "terminal";
+            render();
+          }
+          break;
+
+        case "output":
+          if (term) term.write(msg.data);
+          break;
+
+        case "queue":
+          showQueue(msg.position);
+          break;
+
+        case "warning":
+          if (term) {
+            term.write(`\r\n\x1b[33m⚠ ${msg.message}\x1b[0m\r\n`);
+          }
+          break;
+
+        case "terminated":
+          state = "ended";
+          renderEnded(msg.reason);
+          break;
+      }
+    };
+
+    ws.onclose = () => {
+      if (state !== "ended") {
+        state = "ended";
+        renderEnded("Connection lost");
+      }
+    };
+
+    ws.onerror = () => {};
+  }
+
+  function sendMsg(obj) {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify(obj));
+    }
+  }
+
+  // ─── Init ───────────────────────────────────────────────────
+  render();
+})();
+</script>
+</body>
+</html>

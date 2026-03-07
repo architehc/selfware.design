@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+<meta name="theme-color" content="#0c0f08">
+<meta name="description" content="Selfware — Software that improves itself. Locally run, privately owned, recursively evolving. An autonomous AI workshop where emergence replaces entropy.">
+<meta property="og:title" content="selfware.design — Software that grows with you">
+<meta property="og:description" content="Your personal AI workshop. Local LLMs, multi-agent swarms, recursive self-improvement.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://selfware.design">
+<meta property="og:image" content="https://selfware.design/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://selfware.design/og-image.png">
+<meta name="twitter:title" content="selfware.design — Software that grows with you">
+<meta name="twitter:description" content="Your personal AI workshop. 54 tools, 6 agent roles, recursive self-improvement. 100% local.">
+<link rel="canonical" href="https://selfware.design">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦊</text></svg>">
+<title>selfware.design — Software that grows with you</title>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Selfware","applicationCategory":"DeveloperApplication","operatingSystem":"Linux, macOS, Windows","url":"https://selfware.design","downloadUrl":"https://crates.io/crates/selfware","softwareVersion":"0.1.x","license":"https://opensource.org/licenses/MIT","description":"An autonomous AI coding workshop. Multi-agent swarms, recursive self-improvement, visual intelligence. 100% local, MIT licensed.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"Selfware","url":"https://github.com/architehc/selfware"},"programmingLanguage":"Rust","aggregateRating":{"@type":"AggregateRating","ratingValue":"89","bestRating":"100","ratingCount":"323","reviewCount":"27"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="dns-prefetch" href="https://api.github.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet"></noscript>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:80px}
+body{background:#0c0f08;color:#e8e0d0;font-family:'Instrument Serif',Georgia,serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.45}
+::selection{background:rgba(212,163,115,0.3);color:#fefae0}
+a{transition:color 0.3s}
+a:hover{color:#D4A373!important}
+button{-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid #D4A373;outline-offset:2px;border-radius:6px}
+a:focus-visible{outline:2px solid #D4A373;outline-offset:2px;border-radius:4px}
+canvas{max-width:100%;height:auto}
+.marquee-track:hover{animation-play-state:paused}
+
+.mobile-menu-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;min-width:72px;padding:10px 12px;border-radius:10px}
+.mobile-sheet{position:fixed;left:12px;right:12px;z-index:99;border-radius:14px;padding:14px;background:rgba(12,15,8,.97);backdrop-filter:blur(16px);border:1px solid rgba(212,163,115,.15);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.mobile-sheet a{display:block;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;color:#c1b79f;text-decoration:none;padding:12px;border-radius:8px}
+.mobile-sheet a:active{background:rgba(212,163,115,.08)}
+
+@keyframes glow{0%,100%{text-shadow:0 0 40px hsla(35,70%,55%,0.25)}50%{text-shadow:0 0 80px hsla(35,70%,55%,0.45),0 0 120px hsla(35,70%,55%,0.15)}}
+@keyframes breathe{0%,100%{opacity:0.35}50%{opacity:0.75}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(96,108,56,0.3)}50%{box-shadow:0 0 0 8px rgba(96,108,56,0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* Responsive grid helper */
+.grid-2col{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.grid-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.grid-5col{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+
+@media(max-width:768px){
+  .grid-2col{grid-template-columns:1fr;gap:32px}
+  .grid-3col{grid-template-columns:1fr;gap:2px}
+  .grid-5col{grid-template-columns:repeat(2,1fr);gap:2px}
+  .phase-buttons{grid-template-columns:repeat(2,1fr)!important}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .grid-3col{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:420px){
+  .mobile-sheet{left:8px;right:8px;padding:10px}
+}
+canvas{will-change:transform}
+@media print{
+  body{background:#fff!important;color:#111!important}
+  canvas,nav[style*="fixed"],.marquee-track,.mobile-menu-btn,.mobile-sheet{display:none!important}
+  *{animation:none!important;transition:none!important;text-shadow:none!important;box-shadow:none!important}
+  div[style*="background"]{background:transparent!important;border-color:#ccc!important}
+  a{color:#333!important;text-decoration:underline!important}
+  a[href]::after{content:" (" attr(href) ")";font-size:9px;color:#666}
+  h1,h2,h3{color:#111!important;page-break-after:avoid}
+  section,div[role="main"]{page-break-inside:avoid}
+  footer{border-top:1px solid #ccc!important}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div id="root"><div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'DM Mono',monospace;color:#D4A373;font-size:13px;letter-spacing:0.1em;opacity:0.6">loading...</div></div>
+<noscript><div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:monospace;color:#D4A373;font-size:14px;text-align:center;padding:20px">JavaScript is required to view selfware.design.<br>Please enable JavaScript and reload.</div></noscript>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script>
+const e=React.createElement,{useState,useEffect,useRef,useCallback,Fragment}=React;
+
+// ─── Particle System ─────────────────────────────────────────────
+function useParticles(canvasRef,phase){
+  const anim=useRef(null),ps=useRef([]),t=useRef(0),visible=useRef(true);
+  useEffect(()=>{
+    const c=canvasRef.current;if(!c)return;
+    const ctx=c.getContext("2d"),N=80;
+    const resize=()=>{const d=Math.min(devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;ctx.setTransform(d,0,0,d,0,0)};
+    resize();window.addEventListener("resize",resize);
+    const obs=new IntersectionObserver(([entry])=>{visible.current=entry.isIntersecting;if(entry.isIntersecting&&!anim.current)anim.current=requestAnimationFrame(draw)},{threshold:0.05});
+    obs.observe(c);
+    ps.current=Array.from({length:N},()=>({x:Math.random()*c.offsetWidth,y:Math.random()*c.offsetHeight,vx:(Math.random()-.5)*1.2,vy:(Math.random()-.5)*1.2,sz:Math.random()*2+1,h:28+Math.random()*16,s:Math.random()}));
+    const draw=()=>{
+      if(!visible.current){anim.current=null;return}
+      const W=c.offsetWidth,H=c.offsetHeight;t.current+=.007;const T=t.current;
+      ctx.clearRect(0,0,W,H);const P=ps.current;
+      P.forEach(p=>{
+        if(phase===0){p.vx*=.96;p.vy*=.96}
+        else if(phase===1){p.vx=Math.sin(T*2+p.s*6.28)*.7;p.vy=Math.cos(T*2+p.s*6.28)*.7}
+        else if(phase===2){p.vx+=(Math.random()-.5)*.5;p.vy+=(Math.random()-.5)*.5;p.vx*=.94;p.vy*=.94}
+        else{
+          let cx=0,cy=0,n=0;
+          P.forEach(q=>{const dx=q.x-p.x,dy=q.y-p.y,d=Math.sqrt(dx*dx+dy*dy);if(d>0&&d<75){cx+=q.x;cy+=q.y;n++;if(d<22){p.vx-=dx*.012;p.vy-=dy*.012}}});
+          if(n>0){cx/=n;cy/=n;p.vx+=(cx-p.x)*.0008;p.vy+=(cy-p.y)*.0008}
+          const mx=W/2+Math.sin(T*.25)*W*.15,my=H/2+Math.cos(T*.18)*H*.12,dx=mx-p.x,dy=my-p.y,dist=Math.sqrt(dx*dx+dy*dy)||1;
+          p.vx+=(-dy/dist)*.035+dx*.00008;p.vy+=(dx/dist)*.035+dy*.00008;p.vx*=.98;p.vy*=.98;
+        }
+        p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      });
+      if(phase>=3){for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[j].x-P[i].x,dy=P[j].y-P[i].y,d=Math.sqrt(dx*dx+dy*dy);if(d<65){ctx.strokeStyle=`hsla(33,60%,58%,${(1-d/65)*.22})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(P[i].x,P[i].y);ctx.lineTo(P[j].x,P[j].y);ctx.stroke()}}}
+      P.forEach(p=>{const g=phase>=3?.75:.35+Math.sin(T*3+p.s*10)*.2;ctx.fillStyle=`hsla(${p.h},60%,62%,${g})`;ctx.beginPath();ctx.arc(p.x,p.y,p.sz*(phase>=3?1.4:1),0,Math.PI*2);ctx.fill()});
+      anim.current=requestAnimationFrame(draw);
+    };
+    draw();
+    return()=>{cancelAnimationFrame(anim.current);anim.current=null;window.removeEventListener("resize",resize);obs.disconnect()};
+  },[canvasRef,phase]);
+}
+
+// ─── Game of Life ────────────────────────────────────────────────
+function GoL({w:W,h:H,mobile:isMobile}){
+  const ref=useRef(),grid=useRef(),CELL=6;
+  const init=useCallback(()=>Array.from({length:H},()=>Array.from({length:W},()=>Math.random()<.28?1:0)),[W,H]);
+  useEffect(()=>{
+    const c=ref.current;if(!c)return;const ctx=c.getContext("2d");c.width=W*CELL;c.height=H*CELL;grid.current=init();let last=0,id;
+    const step=()=>{const g=grid.current;grid.current=g.map((row,y)=>row.map((_,x)=>{let n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const ny=y+dy,nx=x+dx;if(ny>=0&&ny<H&&nx>=0&&nx<W)n+=g[ny][nx]?1:0}return g[y][x]?(n===2||n===3?2:0):(n===3?1:0)}))};
+    const draw=ts=>{if(ts-last>120){step();last=ts}ctx.fillStyle="#0c0f08";ctx.fillRect(0,0,c.width,c.height);const g=grid.current;for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(g[y][x]){ctx.fillStyle=g[y][x]>1?"#D4A373":"#606C38";ctx.fillRect(x*CELL+1,y*CELL+1,CELL-2,CELL-2)}id=requestAnimationFrame(draw)};
+    id=requestAnimationFrame(draw);return()=>cancelAnimationFrame(id);
+  },[W,H,init]);
+  return e("div",{style:{position:"relative"}},
+    e("canvas",{ref,role:"img","aria-label":"Conway's Game of Life cellular automaton simulation",style:{width:"100%",height:"auto",borderRadius:8,display:"block",imageRendering:"pixelated"}}),
+    e("button",{onClick:()=>{grid.current=init()},style:{position:"absolute",bottom:8,right:8,background:"rgba(212,163,115,0.15)",border:"1px solid rgba(212,163,115,0.25)",color:"#D4A373",padding:isMobile?"8px 14px":"6px 14px",borderRadius:7,fontFamily:"'DM Mono',monospace",fontSize:isMobile?12:11,cursor:"pointer",minHeight:isMobile?36:"auto"}},"reseed")
+  );
+}
+
+// ─── Scroll Visibility ───────────────────────────────────────────
+function useVis(ref,th){
+  const[v,set]=useState(false);
+  useEffect(()=>{const el=ref.current;if(!el)return;const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)set(true)},{threshold:th||.12});o.observe(el);return()=>o.disconnect()},[ref,th]);
+  return v;
+}
+
+function Fade({children,delay,style,nav}){
+  const ref=useRef(),vis=useVis(ref,.1);
+  return e("div",{ref,"data-nav":nav||undefined,style:{opacity:vis?1:0,transform:vis?"translateY(0)":"translateY(32px)",transition:`opacity 0.7s ease ${delay||0}s, transform 0.7s ease ${delay||0}s`,...(style||{})}},children);
+}
+
+function LazySection({children,height}){
+  const ref=useRef(),[load,setLoad]=useState(false);
+  useEffect(()=>{const el=ref.current;if(!el)return;const o=new IntersectionObserver(([e])=>{if(e.isIntersecting){setLoad(true);o.disconnect()}},{rootMargin:"200px"});o.observe(el);return()=>o.disconnect()},[]);
+  return e("div",{ref,style:{minHeight:load?undefined:(height||200)}},load?children:null);
+}
+
+// ─── Animated Number ─────────────────────────────────────────────
+function Num({target:T,suffix:S,active:A}){
+  const[v,set]=useState(0);
+  useEffect(()=>{if(!A)return;let f;const s=performance.now(),tick=n=>{const t=Math.min((n-s)/2000,1);set(Math.round(T*(1-Math.pow(1-t,4))));if(t<1)f=requestAnimationFrame(tick)};f=requestAnimationFrame(tick);return()=>cancelAnimationFrame(f)},[T,A]);
+  return e("span",null,v,S||"");
+}
+
+// ─── Terminal Demo ───────────────────────────────────────────────
+const TERM_LINES=[
+  {t:"cmd",v:"$ selfware analyze ./massive_game_server",d:40},
+  {t:"out",v:"🔍 Scanning 133 Rust files (42,596 lines)...",d:800},
+  {t:"warn",v:"⚠  Found 3 critical issues:",d:600},
+  {t:"sub",v:"   1. Delta bitmask truncation → silent data loss",d:200},
+  {t:"sub",v:"   2. ObjectPool race condition → memory exhaustion",d:200},
+  {t:"sub",v:"   3. SMS command injection → RCE vulnerability",d:200},
+  {t:"out",v:"📊 Doc coverage: 0.8% — needs 20%+",d:400},
+  {t:"gap"},
+  {t:"cmd",v:'$ selfware run "fix critical bugs, add tests"',d:40},
+  {t:"agent",v:"🏗️ Architect → planning fix across 18 modules",d:500,c:"#D4A373"},
+  {t:"agent",v:"💻 Coder → patching delta bitmask (u16 not u8)",d:400,c:"#606C38"},
+  {t:"agent",v:"🧪 Tester → generating 47 regression tests",d:400,c:"#BC6C25"},
+  {t:"agent",v:"🔍 Reviewer → verifying thread safety",d:300,c:"#8B7355"},
+  {t:"agent",v:"🔒 Security → sanitizing shell construction",d:300,c:"#C75B3A"},
+  {t:"bloom",v:"🌸 BLOOM — all 3 critical bugs fixed. 47 tests pass.",d:600},
+  {t:"gap"},
+  {t:"cmd",v:"$ selfware garden",d:40},
+  {t:"tree",v:"🌱 massive_game_server",d:200},
+  {t:"tree",v:"├── 🌸 core/          BLOOM  (healthy)",d:150},
+  {t:"tree",v:"├── 🌿 network/       GROW   (improving)",d:150},
+  {t:"tree",v:"├── 🌾 state_sync/    WILT   (needs care)",d:150},
+  {t:"tree",v:"└── ❄️ auth/          FROST  (critical)",d:150},
+];
+function TerminalDemo({mobile}){
+  const ref=useRef(),vis=useVis(ref,.2);
+  const[lines,setLines]=useState([]);
+  const started=useRef(false);
+  useEffect(()=>{
+    if(!vis||started.current)return;started.current=true;
+    let i=0,timeout;
+    const next=()=>{
+      if(i>=TERM_LINES.length)return;
+      const line=TERM_LINES[i];i++;
+      if(line.t==="gap"){setLines(p=>[...p,line]);timeout=setTimeout(next,400);return}
+      setLines(p=>[...p,line]);
+      timeout=setTimeout(next,line.d||200);
+    };
+    timeout=setTimeout(next,600);
+    return()=>clearTimeout(timeout);
+  },[vis]);
+  const lnStyle=(l)=>{
+    const base={fontFamily:M,fontSize:mobile?11:13,lineHeight:1.7,whiteSpace:"pre-wrap",wordBreak:"break-word"};
+    if(l.t==="cmd")return{...base,color:"#e8e0d0"};
+    if(l.t==="warn")return{...base,color:"#C75B3A"};
+    if(l.t==="sub")return{...base,color:"#b0a590"};
+    if(l.t==="agent")return{...base,color:l.c||"#888"};
+    if(l.t==="bloom")return{...base,color:"#606C38",fontWeight:500};
+    if(l.t==="tree")return{...base,color:"#a09880",fontSize:mobile?10:12};
+    if(l.t==="gap")return{height:12};
+    return{...base,color:"#a09880"};
+  };
+  return e("div",{ref,style:{background:"rgba(0,0,0,0.45)",border:"1px solid rgba(212,163,115,0.1)",borderRadius:mobile?10:14,padding:mobile?"16px 14px":"24px 28px",maxWidth:700,margin:"0 auto",minHeight:mobile?200:280,maxHeight:mobile?360:420,overflow:"auto"}},
+    e("div",{style:{display:"flex",gap:6,marginBottom:mobile?12:16}},
+      ...[["#C75B3A","8"],["#D4A373","8"],["#606C38","8"]].map(([c,s],i)=>e("div",{key:i,style:{width:s+"px",height:s+"px",borderRadius:"50%",background:c,opacity:.6}}))
+    ),
+    ...lines.map((l,i)=>e("div",{key:i,style:{...lnStyle(l),animation:"fadeUp 0.3s ease both"}},(l.t!=="gap")?l.v:null))
+  );
+}
+
+// ─── Agent Swarm Viz ─────────────────────────────────────────────
+const AGENTS=[
+  {role:"Architect",icon:"🏗️",desc:"Module design, refactoring, dependency mapping. Plans the structure before anyone writes a line.",color:"#D4A373"},
+  {role:"Coder",icon:"💻",desc:"Implementation and feature development. Writes the code that passes the Tester's scrutiny.",color:"#606C38"},
+  {role:"Tester",icon:"🧪",desc:"Test generation, verification gates. Every mutation must survive the test suite.",color:"#BC6C25"},
+  {role:"Reviewer",icon:"🔍",desc:"Code review, quality checks. Catches what the Coder missed and the Tester didn't cover.",color:"#8B7355"},
+  {role:"DevOps",icon:"⚙️",desc:"Build pipelines, deployment, infrastructure. Keeps the workshop running.",color:"#7a8a5a"},
+  {role:"Security",icon:"🔒",desc:"Vulnerability scanning, safety audits. Guards the protected groves.",color:"#C75B3A"},
+];
+function SwarmViz({mobile}){
+  const[active,setActive]=useState(0);
+  const[pulse,setPulse]=useState(-1);
+  useEffect(()=>{
+    const iv=setInterval(()=>setPulse(p=>(p+1)%6),2000);
+    return()=>clearInterval(iv);
+  },[]);
+  const ag=AGENTS[active];
+  return e("div",null,
+    e("div",{style:{display:"grid",gridTemplateColumns:mobile?"repeat(3,1fr)":"repeat(6,1fr)",gap:mobile?8:12,marginBottom:mobile?20:28}},
+      ...AGENTS.map((a,i)=>e("button",{key:i,onClick:()=>setActive(i),style:{background:active===i?"rgba(212,163,115,0.1)":"rgba(0,0,0,0.2)",border:active===i?"1px solid "+a.color+"44":"1px solid rgba(212,163,115,0.06)",borderRadius:10,padding:mobile?"12px 6px":"16px 10px",cursor:"pointer",textAlign:"center",transition:"all 0.3s",transform:pulse===i?"scale(1.05)":"scale(1)"}},
+        e("div",{style:{fontSize:mobile?20:26,marginBottom:4,filter:pulse===i?"brightness(1.3)":"none",transition:"filter 0.3s"}},a.icon),
+        e("div",{style:{fontFamily:M,fontSize:mobile?9:10,color:active===i?a.color:"#777",letterSpacing:"0.04em"}},a.role)
+      ))
+    ),
+    e("div",{style:{background:"rgba(0,0,0,0.25)",border:"1px solid "+ag.color+"22",borderRadius:10,padding:mobile?16:22,minHeight:mobile?60:70,transition:"border-color 0.3s"}},
+      e("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:8}},
+        e("span",{style:{fontSize:18}},ag.icon),
+        e("span",{style:{fontFamily:M,fontSize:mobile?12:13,color:ag.color,fontWeight:500}},ag.role)
+      ),
+      e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:mobile?13:14,color:"#a09880",lineHeight:1.6,fontStyle:"italic"}},ag.desc)
+    )
+  );
+}
+
+// ─── Visual Score Bar ────────────────────────────────────────────
+function ScoreBar({label,score,color,active,mobile}){
+  const[val,setVal]=useState(0);
+  useEffect(()=>{if(!active)return;const t=setTimeout(()=>setVal(score),200);return()=>clearTimeout(t)},[score,active]);
+  return e("div",{style:{marginBottom:mobile?8:10}},
+    e("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:4}},
+      e("span",{style:{fontFamily:M,fontSize:mobile?10:11,color:"#a09880"}},label),
+      e("span",{style:{fontFamily:M,fontSize:mobile?10:11,color:color}},val+"/100")
+    ),
+    e("div",{style:{height:4,borderRadius:2,background:"rgba(212,163,115,0.08)",overflow:"hidden"}},
+      e("div",{style:{height:"100%",width:val+"%",background:color,borderRadius:2,transition:"width 1.2s cubic-bezier(0.4,0,0.2,1)"}})
+    )
+  );
+}
+
+// ─── Visual Scores Panel ─────────────────────────────────────────
+function VisualScoresPanel({mobile}){
+  const ref=useRef(),active=useVis(ref,.3);
+  return e("div",{ref},
+    e(ScoreBar,{label:"Composition",score:82,color:A,active,mobile}),
+    e(ScoreBar,{label:"Hierarchy",score:78,color:G,active,mobile}),
+    e(ScoreBar,{label:"Readability",score:91,color:"#BC6C25",active,mobile}),
+    e(ScoreBar,{label:"Consistency",score:85,color:"#8B7355",active,mobile}),
+    e(ScoreBar,{label:"Accessibility",score:74,color:"#C75B3A",active,mobile})
+  );
+}
+
+// ─── Navigation Dots ────────────────────────────────────────────
+function NavDots({mobile}){
+  if(mobile)return null;
+  const[items,setItems]=useState([]);
+  const[active,setActive]=useState(0);
+  useEffect(()=>{
+    const t=setTimeout(()=>{
+      const els=Array.from(document.querySelectorAll("[data-nav]"));
+      setItems(els.map(el=>({label:el.dataset.nav,el})));
+    },600);
+    return()=>clearTimeout(t);
+  },[]);
+  useEffect(()=>{
+    if(!items.length)return;
+    const onScroll=()=>{
+      let closest=0;
+      items.forEach((s,i)=>{if(s.el.getBoundingClientRect().top<=120)closest=i});
+      setActive(closest);
+    };
+    window.addEventListener("scroll",onScroll,{passive:true});
+    onScroll();
+    return()=>window.removeEventListener("scroll",onScroll);
+  },[items]);
+  if(!items.length)return null;
+  return e("nav",{"aria-label":"Section navigation",style:{position:"fixed",right:16,top:"50%",transform:"translateY(-50%)",zIndex:50,display:"flex",flexDirection:"column",gap:12,alignItems:"flex-end"}},
+    ...items.map((s,i)=>e("button",{key:i,onClick:()=>s.el.scrollIntoView({behavior:"smooth",block:"start"}),title:s.label,"aria-label":"Jump to "+s.label,style:{display:"flex",alignItems:"center",gap:8,background:"none",border:"none",cursor:"pointer",padding:"2px 0",transition:"all 0.3s"}},
+      e("span",{style:{fontFamily:M,fontSize:9,color:active===i?"#D4A373":"transparent",letterSpacing:"0.04em",transition:"color 0.3s",whiteSpace:"nowrap",pointerEvents:"none"}},s.label),
+      e("span",{style:{width:active===i?20:6,height:6,borderRadius:3,background:active===i?"#D4A373":"rgba(212,163,115,0.25)",transition:"all 0.3s ease",flexShrink:0}})
+    ))
+  );
+}
+
+// ─── Config ──────────────────────────────────────────────────────
+const PHASES=[
+  {label:"Flat",icon:"—",desc:"Static. Dead code. No signal. The heat death of meaning.",color:"#808080",entropy:"~0",bar:8},
+  {label:"Repetitive",icon:"∿",desc:"Crystal lattice. Maximum order, zero surprise. Traditional CI/CD — structured but blind.",color:"#8B7355",entropy:"low",bar:25},
+  {label:"Chaotic",icon:"⚡",desc:"Pure entropy. Unconstrained LLM output — sprawling hallucinations, fragile logic.",color:"#C75B3A",entropy:"max",bar:90},
+  {label:"Complex",icon:"✦",desc:"The edge of chaos. PDVR cognition + safety constraints = structure that breathes. Where life happens.",color:"#D4A373",entropy:"med",bar:58},
+];
+const INVS=["Cannot modify its own fitness function","Cannot modify the benchmark suite","Cannot modify the safety module","All mutations must pass cargo check","Property tests mandatory for core mutations"];
+const PROT=["src/evolution/","src/safety/","system_tests/","benches/sab_"];
+const M="'DM Mono',monospace",S="'Newsreader',serif",A="#D4A373",G="#606C38";
+const NAV_LINKS=[["TRY IT","/try"],["GITHUB","https://github.com/architehc/selfware"],["CRATES.IO","https://crates.io/crates/selfware"],["DOCS","https://docs.rs/selfware"]];
+
+// ─── TUI Terminal Card ──────────────────────────────────────────
+const TUI_CARDS=[
+  {title:"selfware garden",lines:[
+    {t:"head",v:"\u{1F331} massive_game_server"},
+    {t:"tree",v:"\u251C\u2500\u2500 \u{1F338} core/           BLOOM   health: 94%",c:G},
+    {t:"tree",v:"\u251C\u2500\u2500 \u{1F33F} network/        GROW    health: 71%",c:"#a09880"},
+    {t:"tree",v:"\u251C\u2500\u2500 \u{1F33E} state_sync/     WILT    health: 42%",c:"#BC6C25"},
+    {t:"tree",v:"\u251C\u2500\u2500 \u2744\uFE0F  auth/           FROST   health: 18%",c:"#C75B3A"},
+    {t:"tree",v:"\u2514\u2500\u2500 \u{1F331} ai/             SEED    health: --",c:"#808080"},
+    {t:"info",v:"5 modules \u00B7 42.6K lines \u00B7 last bloom: 2h ago"},
+  ]},
+  {title:"selfware dashboard",lines:[
+    {t:"head",v:"\u{1F98A} SELFWARE v0.1.x"},
+    {t:"sep"},
+    {t:"kv",k:"Model",v:"qwen3-coder-32b FP8"},
+    {t:"kv",k:"Endpoint",v:"localhost:11434"},
+    {t:"kv",k:"Memory",v:"147 episodes (3.2 MB)"},
+    {t:"kv",k:"Uptime",v:"4h 23m"},
+    {t:"sep"},
+    {t:"stat",v:"BLOOMs: 22  \u2502  FROSTs: 5  \u2502  SAB: 90"},
+  ]},
+  {title:"selfware multi-chat",lines:[
+    {t:"agent",v:"\u{1F3D7}\uFE0F Architect",desc:"Splitting monolith into 18 mods",c:A},
+    {t:"agent",v:"\u{1F4BB} Coder",desc:"Patching delta bitmask (u16\u2192u32)",c:G},
+    {t:"agent",v:"\u{1F9EA} Tester",desc:"Running 47 regression tests...",c:"#BC6C25"},
+    {t:"agent",v:"\u{1F50D} Reviewer",desc:"Checking thread safety invariants",c:"#8B7355"},
+    {t:"agent",v:"\u{1F512} Security",desc:"Sanitizing shell construction",c:"#C75B3A"},
+    {t:"bloom",v:"\u{1F338} BLOOM \u2014 all tasks complete. 47/47 tests pass."},
+  ]},
+];
+
+function TuiCard({card,mobile}){
+  return e("div",{style:{background:"rgba(0,0,0,0.4)",border:"1px solid rgba(212,163,115,0.1)",borderRadius:10,overflow:"hidden",minWidth:mobile?260:280}},
+    e("div",{style:{padding:"8px 12px",borderBottom:"1px solid rgba(212,163,115,0.08)",display:"flex",alignItems:"center",gap:8}},
+      e("div",{style:{display:"flex",gap:5}},
+        ...[["#C75B3A",5],["#BC6C25",5],[G,5]].map(([c,r],i)=>e("div",{key:i,style:{width:r,height:r,borderRadius:"50%",background:c,opacity:.6}}))
+      ),
+      e("span",{style:{fontFamily:M,fontSize:mobile?9:10,color:"#888",letterSpacing:"0.04em"}},card.title)
+    ),
+    e("div",{style:{padding:mobile?"10px 12px":"12px 16px",fontFamily:M,fontSize:mobile?10:11,lineHeight:1.7}},
+      ...card.lines.map((l,i)=>{
+        if(l.t==="head")return e("div",{key:i,style:{color:A,marginBottom:4,fontSize:mobile?11:12}},l.v);
+        if(l.t==="sep")return e("div",{key:i,style:{borderBottom:"1px solid rgba(212,163,115,0.08)",margin:"6px 0"}});
+        if(l.t==="tree")return e("div",{key:i,style:{color:l.c||"#a09880",whiteSpace:"pre"}},l.v);
+        if(l.t==="info")return e("div",{key:i,style:{color:"#808080",marginTop:6,fontSize:mobile?9:10}},l.v);
+        if(l.t==="kv")return e("div",{key:i,style:{display:"flex",gap:8,color:"#888"}},e("span",{style:{color:"#808080",minWidth:70}},l.k+":"),e("span",{style:{color:"#a09880"}},l.v));
+        if(l.t==="stat")return e("div",{key:i,style:{color:G,textAlign:"center",fontSize:mobile?10:11}},l.v);
+        if(l.t==="agent")return e("div",{key:i,style:{padding:"4px 0",borderBottom:i<card.lines.length-1?"1px solid rgba(212,163,115,0.05)":"none"}},
+          e("div",{style:{color:l.c||A,fontSize:mobile?10:11}},l.v),
+          e("div",{style:{color:"#888",fontSize:mobile?9:10,paddingLeft:20}},l.desc)
+        );
+        if(l.t==="bloom")return e("div",{key:i,style:{color:G,marginTop:6,fontSize:mobile?10:11}},l.v);
+        return null;
+      })
+    )
+  );
+}
+
+// ─── Email Signup ────────────────────────────────────────────────
+function EmailForm({mobile}){
+  const[email,setEmail]=useState("");
+  const[state,setState]=useState("idle"); // idle | sending | done | error
+  const[msg,setMsg]=useState("");
+  const submit=()=>{
+    if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return setState("error")||setMsg("Enter a valid email");
+    setState("sending");
+    fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})})
+      .then(r=>r.json())
+      .then(d=>{setState("done");setMsg(d.msg||"Subscribed!");setEmail("")})
+      .catch(()=>{setState("error");setMsg("Something went wrong")});
+  };
+  if(state==="done")return e("div",{style:{fontFamily:M,fontSize:mobile?11:12,color:G,textAlign:"center",padding:"12px 0"}},"✓ "+msg);
+  return e("div",{style:{display:"flex",gap:8,maxWidth:420,margin:"0 auto",flexWrap:"wrap",justifyContent:"center"}},
+    e("input",{type:"email",value:email,onChange:ev=>setEmail(ev.target.value),onKeyDown:ev=>{if(ev.key==="Enter")submit()},placeholder:"your@email.com","aria-label":"Email address",style:{flex:"1 1 220px",fontFamily:M,fontSize:mobile?12:13,padding:mobile?"10px 14px":"11px 16px",background:"rgba(0,0,0,0.35)",border:state==="error"?"1px solid rgba(199,91,58,0.4)":"1px solid rgba(212,163,115,0.15)",borderRadius:8,color:"#e8e0d0",outline:"none",minWidth:0}}),
+    e("button",{onClick:submit,disabled:state==="sending",style:{fontFamily:M,fontSize:mobile?11:12,padding:mobile?"10px 18px":"11px 22px",background:"rgba(212,163,115,0.12)",border:"1px solid rgba(212,163,115,0.28)",borderRadius:8,color:A,cursor:"pointer",letterSpacing:"0.04em",whiteSpace:"nowrap",opacity:state==="sending"?.6:1}},state==="sending"?"...":"Notify me"),
+    state==="error"&&e("div",{style:{width:"100%",fontFamily:M,fontSize:10,color:"#C75B3A",textAlign:"center",marginTop:2}},msg)
+  );
+}
+
+// ─── Sticky CTA ──────────────────────────────────────────────────
+function StickyCTA({scrollY,mobile}){
+  const show=scrollY>600;
+  return e("div",{style:{position:"fixed",bottom:mobile?16:24,right:mobile?16:24,zIndex:90,opacity:show?1:0,transform:show?"translateY(0)":"translateY(20px)",transition:"all 0.4s ease",pointerEvents:show?"auto":"none"}},
+    e("a",{href:"https://github.com/architehc/selfware",target:"_blank",rel:"noopener",style:{display:"inline-flex",alignItems:"center",gap:8,padding:mobile?"10px 16px":"12px 20px",background:"rgba(12,15,8,0.95)",border:"1px solid rgba(212,163,115,0.3)",borderRadius:10,color:A,textDecoration:"none",fontFamily:M,fontSize:mobile?11:12,letterSpacing:"0.04em",backdropFilter:"blur(12px)",boxShadow:"0 8px 32px rgba(0,0,0,0.4)"}},"cargo install selfware","→")
+  );
+}
+
+const GH="https://github.com/architehc/selfware/tree/main/";
+
+// ═══ MAIN ═══════════════════════════════════════════════════════
+function App(){
+  const[phase,setPhase]=useState(3),[scrollY,setSY]=useState(0),heroRef=useRef(),statsRef=useRef(),statsVis=useVis(statsRef,.25);
+  const[isMobile,setMobile]=useState(false),[menuOpen,setMenuOpen]=useState(false),[vpW,setVpW]=useState(typeof window!=="undefined"?window.innerWidth:1024);
+  const[gh,setGh]=useState(null);
+  const[commits,setCommits]=useState([]);
+  const[commitCount,setCommitCount]=useState(519);
+  useParticles(heroRef,phase);
+  useEffect(()=>{
+    const h=()=>setSY(window.scrollY);window.addEventListener("scroll",h,{passive:true});
+    const r=()=>{const w=window.innerWidth;setMobile(w<769);setVpW(w)};r();window.addEventListener("resize",r);
+    fetch("https://api.github.com/repos/architehc/selfware").then(r=>r.json()).then(d=>setGh({stars:d.stargazers_count,forks:d.forks_count})).catch(()=>{});
+    fetch("https://api.github.com/repos/architehc/selfware/commits?per_page=5").then(r=>r.json()).then(d=>{if(Array.isArray(d))setCommits(d.map(c=>({sha:c.sha.slice(0,7),msg:c.commit.message.split("\n")[0].slice(0,72),date:c.commit.author.date.slice(0,10),author:c.commit.author.name})))}).catch(()=>{});
+    fetch("https://api.github.com/repos/architehc/selfware/contributors?per_page=100&anon=true").then(r=>{if(r.status===202)return[];return r.json()}).then(d=>{if(Array.isArray(d)&&d.length){const t=d.reduce((s,c)=>s+(c.contributions||0),0);if(t>0)setCommitCount(t)}}).catch(()=>{});
+    return()=>{window.removeEventListener("scroll",h);window.removeEventListener("resize",r)};
+  },[]);
+  useEffect(()=>{if(!isMobile&&menuOpen)setMenuOpen(false)},[isMobile,menuOpen]);
+  useEffect(()=>{
+    const prev=document.body.style.overflow;
+    if(isMobile&&menuOpen)document.body.style.overflow="hidden";
+    else document.body.style.overflow="";
+    return()=>{document.body.style.overflow=prev};
+  },[isMobile,menuOpen]);
+
+  const isNarrow=vpW<390;
+  const px=isMobile?(isNarrow?"16px":"20px"):"40px";
+  const secPad=isMobile?"64px "+px:"110px "+px;
+  const navSolid=isMobile||scrollY>80;
+  const navHeight=isMobile?64:74;
+
+  return e("div",{role:"main",style:{minHeight:"100vh"}},
+
+    e(NavDots,{mobile:isMobile}),
+    e(StickyCTA,{scrollY,mobile:isMobile}),
+
+    // ═══ HERO ═══
+    e("section",{"data-nav":"Home",style:{position:"relative",minHeight:isMobile?"100svh":"100vh",display:"flex",flexDirection:"column",justifyContent:"center"}},
+      e("canvas",{ref:heroRef,role:"img","aria-label":"Interactive particle system demonstrating complexity phases",style:{position:"absolute",inset:0,width:"100%",height:"100%",opacity:.5}}),
+      // grain
+      e("div",{style:{position:"absolute",inset:0,opacity:.03,backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,backgroundSize:"128px",pointerEvents:"none"}}),
+
+      // Nav
+      e("nav",{style:{position:"fixed",top:0,left:0,right:0,zIndex:100,padding:isMobile?"calc(env(safe-area-inset-top) + 10px) 16px 10px":"18px 36px",display:"flex",justifyContent:"space-between",alignItems:"center",background:navSolid?"rgba(12,15,8,0.94)":"transparent",backdropFilter:navSolid?"blur(20px)":"none",borderBottom:navSolid?"1px solid rgba(212,163,115,0.08)":"none",transition:"all 0.35s"}},
+        e("div",{style:{display:"flex",alignItems:"center",gap:8}},
+          e("span",{style:{fontSize:16}},"🦊"),
+          e("span",{style:{fontFamily:M,fontSize:isMobile?12:13,color:A,letterSpacing:"0.12em",fontWeight:500}},"SELFWARE")
+        ),
+        isMobile
+          ? e("button",{onClick:()=>setMenuOpen(v=>!v),className:"mobile-menu-btn","aria-label":menuOpen?"Close menu":"Open menu",style:{background:menuOpen?"rgba(212,163,115,0.14)":"rgba(0,0,0,0.25)",border:"1px solid rgba(212,163,115,0.2)",color:menuOpen?A:"#8f8877",fontFamily:M,fontSize:11,letterSpacing:"0.08em",cursor:"pointer"}},menuOpen?"CLOSE":"MENU")
+          : e("div",{style:{display:"flex",gap:28,fontFamily:M,fontSize:11,letterSpacing:"0.06em"}},
+              NAV_LINKS.map(([l,u])=>e("a",{key:l,href:u,...(u.startsWith("http")?{target:"_blank",rel:"noopener"}:{}),style:{color:l==="TRY IT"?A:"#9a9383",textDecoration:"none",fontWeight:l==="TRY IT"?"500":"400"}},l))
+            )
+      ),
+      isMobile&&menuOpen&&e("div",{className:"mobile-sheet",style:{top:"calc(env(safe-area-inset-top) + 60px)"}},
+        NAV_LINKS.map(([l,u])=>e("a",{key:l,href:u,...(u.startsWith("http")?{target:"_blank",rel:"noopener"}:{}),onClick:()=>setMenuOpen(false),style:l==="TRY IT"?{color:A,fontWeight:"500"}:{}},l))
+      ),
+
+      // Hero content
+      e("div",{style:{position:"relative",zIndex:1,padding:"0 "+px,maxWidth:1100,margin:"0 auto",width:"100%",paddingTop:isMobile?navHeight:0}},
+        e("div",{style:{animation:"fadeUp 0.9s ease 0.2s both"}},
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:isMobile?14:20,opacity:.85}},"THE COLLECTIVE IS GREATER THAN THE SUM OF ITS PARTS")
+        ),
+        e("h1",{style:{fontSize:isMobile?"clamp(40px,12vw,56px)":"clamp(52px,8vw,100px)",fontWeight:400,lineHeight:.98,letterSpacing:"-0.03em",marginBottom:isMobile?20:28,animation:"fadeUp 0.9s ease 0.35s both"}},
+          e("span",{style:{color:A,animation:"glow 4s ease infinite"}},"self"),
+          e("span",null,"ware")
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?"clamp(15px,4vw,18px)":"clamp(17px,2.2vw,23px)",fontStyle:"italic",lineHeight:1.65,maxWidth:560,color:"#a09880",fontWeight:300,marginBottom:isMobile?32:44,animation:"fadeUp 0.9s ease 0.5s both"}},
+          "Software that improves itself. Locally run. Privately owned.",e("br"),
+          "An autonomous AI workshop where emergence replaces entropy."
+        ),
+        e("div",{style:{animation:"fadeUp 0.9s ease 0.65s both",display:"flex",gap:12,flexWrap:"wrap",alignItems:"center"}},
+          e("a",{href:"https://github.com/architehc/selfware",target:"_blank",rel:"noopener",style:{display:"inline-flex",alignItems:"center",gap:8,padding:isMobile?"11px 20px":"13px 26px",background:"rgba(212,163,115,0.1)",border:"1px solid rgba(212,163,115,0.28)",borderRadius:8,color:A,textDecoration:"none",fontFamily:M,fontSize:isMobile?12:13,letterSpacing:"0.04em"}},"cargo install selfware"),
+          e("span",{style:{fontFamily:M,fontSize:isMobile?11:11,color:"#7a7a7a",padding:"0 4px"}},"v0.1.x · MIT · Rust"),
+          gh&&e("a",{href:"https://github.com/architehc/selfware",target:"_blank",rel:"noopener",style:{display:"inline-flex",alignItems:"center",gap:5,fontFamily:M,fontSize:isMobile?10:11,color:"#7a7a7a",textDecoration:"none",padding:"5px 10px",background:"rgba(212,163,115,0.06)",border:"1px solid rgba(212,163,115,0.12)",borderRadius:6}},
+            e("span",null,"\u2605"),e("span",{style:{color:"#a09880"}},gh.stars),
+            gh.forks>0&&e(Fragment,null,e("span",{style:{color:"#7a7a7a",margin:"0 2px"}},"\u00B7"),e("span",null,gh.forks+" forks"))
+          )
+        )
+      ),
+      e("div",{style:{position:"absolute",bottom:isMobile?24:36,left:"50%",transform:"translateX(-50%)",animation:"breathe 3s ease infinite",fontFamily:M,fontSize:isMobile?11:10,color:"#6e6e6e",letterSpacing:"0.15em"}},"↓ SCROLL ↓")
+    ),
+
+    // ═══ MARQUEE ═══
+    e("div",{style:{overflow:"hidden",borderTop:"1px solid rgba(212,163,115,0.08)",borderBottom:"1px solid rgba(212,163,115,0.08)",padding:"14px 0",background:"rgba(212,163,115,0.02)"}},
+      e("div",{className:"marquee-track",style:{display:"flex",gap:isMobile?28:48,whiteSpace:"nowrap",animation:"marquee 35s linear infinite",fontFamily:M,fontSize:isMobile?11:11,color:"#9a9383",letterSpacing:"0.12em"}},
+        ...[0,1].map(i=>e("span",{key:i},"AN IDIOT ADMIRES COMPLEXITY · A GENIUS ADMIRES SIMPLICITY · EMERGENCE IS NOT ENTROPY · CONSTRAINTS ARE PHYSICS · FITNESS IS SACRED · SOFTWARE THAT LASTS · "))
+      )
+    ),
+
+    // ═══ SEE IT WORK ═══
+    e(Fade,{nav:"Demo",style:{padding:secPad,maxWidth:1100,margin:"0 auto"}},
+      e("div",{className:"grid-2col",style:{alignItems:"start"}},
+        e("div",null,
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12}},"SEE IT WORK"),
+          e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,34px)":"clamp(28px,4vw,46px)",lineHeight:1.12,marginBottom:18,fontWeight:400}},
+            "Point it at a codebase.",e("br"),e("span",{style:{fontStyle:"italic",color:A}},"Watch it think.")
+          ),
+          e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880",marginBottom:16}},
+            "Selfware analyzed a ",e("strong",{style:{color:"#c0b090"}},"42,000-line game server"),", found 3 critical bugs, and deployed 6 agents to fix them — all autonomously."
+          ),
+          e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880"}},
+            "No prompting. No hand-holding. Just ",e("code",{style:{fontFamily:M,fontSize:isMobile?12:13,color:A,background:"rgba(212,163,115,0.08)",padding:"2px 6px",borderRadius:4}},"selfware run"),
+            " and a task description."
+          )
+        ),
+        e(TerminalDemo,{mobile:isMobile})
+      )
+    ),
+
+    // ═══ AGENT SWARM ═══
+    e(Fade,{nav:"Swarm",style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.03),transparent)"}},
+      e("div",{style:{maxWidth:900,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},
+          e("a",{href:GH+"src/orchestration/",target:"_blank",rel:"noopener",style:{color:A,textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.3)"}},"THE SWARM")
+        ),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:isMobile?24:36}},
+          "Six minds. ",e("span",{style:{fontStyle:"italic",color:G}},"One purpose.")
+        ),
+        e(SwarmViz,{mobile:isMobile}),
+        e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?13:14,fontStyle:"italic",color:"#888",textAlign:"center",marginTop:isMobile?20:28,lineHeight:1.7}},
+          "Each agent runs its own PDVR cycle. They share memory, vote on decisions, and coordinate through a task queue. The swarm is smarter than any single agent."
+        )
+      )
+    ),
+
+    // ═══ SAB BENCHMARK ═══
+    e(Fade,{nav:"Proof",style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(96,108,56,0.03),transparent)"}},
+      e("div",{style:{maxWidth:900,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},
+          e("a",{href:GH+"system_tests/projecte2e/",target:"_blank",rel:"noopener",style:{color:G,textDecoration:"none",borderBottom:"1px solid rgba(96,108,56,0.3)"}},"SELFWARE AGENTIC BENCHMARK")
+        ),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:12}},
+          "Measured. Not promised."
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:520,margin:"0 auto "+(isMobile?"28px":"40px"),lineHeight:1.7}},
+          "20 autonomous coding scenarios. Easy to Expert. 27 rounds, 323 runs. Real Rust projects, real compilation, real test suites."
+        ),
+        // Score highlight
+        e("div",{style:{display:"flex",justifyContent:"center",gap:isMobile?12:24,marginBottom:isMobile?28:40,flexWrap:"wrap"}},
+          ...[
+            {v:"89/100",l:"Grand average",c:G},
+            {v:"90/100",l:"Steady-state",c:A},
+            {v:"22/27",l:"BLOOM rounds",c:"#BC6C25"},
+            {v:"6",l:"Perfect streak",c:"#8B7355"},
+          ].map((s,i)=>e("div",{key:i,style:{textAlign:"center",padding:isMobile?"14px 16px":"18px 24px",background:"rgba(0,0,0,0.3)",border:"1px solid "+(s.c+"22"),borderRadius:10,minWidth:isMobile?75:100}},
+            e("div",{style:{fontSize:isMobile?20:26,fontWeight:400,color:s.c,marginBottom:4}},s.v),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?8:9,color:"#777",letterSpacing:"0.06em"}},s.l)
+          ))
+        ),
+        // Tier breakdown
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?10:16,marginBottom:isMobile?24:36}},
+          ...[
+            {tier:"S",color:G,scenarios:"calculator, string_ops, json_merge, perf_opt, codegen",score:"99-100",rel:"100%"},
+            {tier:"A",color:A,scenarios:"bitset, scheduler, event_bus, async_race",score:"86-96",rel:"89-96%"},
+            {tier:"B",color:"#BC6C25",scenarios:"security, testgen, refactor",score:"63-72",rel:"74%"},
+          ].map((t,i)=>e("div",{key:i,style:{background:"rgba(0,0,0,0.25)",border:"1px solid "+(t.color+"22"),borderRadius:10,padding:isMobile?14:18}},
+            e("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:8}},
+              e("span",{style:{fontFamily:M,fontSize:isMobile?16:20,fontWeight:400,color:t.color}},t.tier),
+              e("span",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#777"}},"TIER"),
+              e("span",{style:{fontFamily:M,fontSize:isMobile?9:10,color:t.color,marginLeft:"auto"}},t.score)
+            ),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888",lineHeight:1.7}},t.scenarios),
+            e("div",{style:{fontFamily:M,fontSize:8,color:"#808080",marginTop:6,letterSpacing:"0.06em"}},"Reliability: "+t.rel)
+          ))
+        ),
+        // Scenario grid — 20 scenarios
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"repeat(2,1fr)":"repeat(5,1fr)",gap:2}},
+          ...[
+            {n:"calculator",d:"Easy",c:G},{n:"string_ops",d:"Easy",c:G},
+            {n:"json_merge",d:"Med",c:"#8B7355"},{n:"bitset",d:"Med",c:"#8B7355"},
+            {n:"testgen",d:"Med",c:"#8B7355"},{n:"refactor",d:"Med",c:"#8B7355"},
+            {n:"scheduler",d:"Hard",c:"#BC6C25"},{n:"event_bus",d:"Hard",c:"#BC6C25"},
+            {n:"security",d:"Hard",c:"#BC6C25"},{n:"perf_opt",d:"Hard",c:"#BC6C25"},
+            {n:"codegen",d:"Hard",c:"#BC6C25"},{n:"async_race",d:"Expert",c:"#C75B3A"},
+            {n:"svg_chart",d:"Easy",c:G},{n:"ascii_table",d:"Easy",c:G},
+            {n:"histogram",d:"E-Med",c:"#8B7355"},{n:"sparkline",d:"E-Med",c:"#8B7355"},
+            {n:"progress_bar",d:"Med",c:"#8B7355"},{n:"maze_gen",d:"Med",c:"#8B7355"},
+            {n:"unsafe_scan",d:"Hard",c:"#BC6C25"},{n:"actor_pdvr",d:"Hard",c:"#BC6C25"},
+          ].map((s,i)=>e("div",{key:i,style:{background:"rgba(212,163,115,0.025)",padding:isMobile?"8px 6px":"10px 12px",textAlign:"center"}},
+            e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#a09880",marginBottom:2}},s.n),
+            e("div",{style:{fontFamily:M,fontSize:8,color:s.c,letterSpacing:"0.06em"}},s.d)
+          ))
+        ),
+        // Phase Transitions (folded in)
+        e("div",{style:{marginTop:isMobile?28:40,background:"rgba(212,163,115,0.03)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:isMobile?10:12,padding:isMobile?"18px 16px":"24px 28px"}},
+          e("p",{style:{fontFamily:M,fontSize:isMobile?10:10,color:A,letterSpacing:"0.12em",marginBottom:14}},"PHASE TRANSITIONS — HOW WE GOT HERE"),
+          e("div",{style:{display:"flex",flexWrap:"wrap",gap:isMobile?6:8,alignItems:"center"}},
+            ...[
+              ["Round 1","0/5 tests","❄️","#C75B3A"],
+              ["+ gate","Completion gate","→","#808080"],
+              ["Round 2","6/6 pass, 97/100","🌸",G],
+              ["+ detect","No-op + repetition detector","→","#808080"],
+              ["Round 5","Rescues infinite loops","🌸",G],
+            ].map(([label,desc,icon,c],i)=>e("div",{key:i,style:{display:"inline-flex",alignItems:"center",gap:6,padding:isMobile?"5px 8px":"6px 12px",background:"rgba(0,0,0,0.25)",borderRadius:6,fontSize:isMobile?10:11}},
+              e("span",{style:{fontSize:12}},icon),
+              e("span",{style:{fontFamily:M,color:c,fontSize:isMobile?9:10}},label),
+              e("span",{style:{fontFamily:S,color:"#888",fontSize:isMobile?9:10}},desc)
+            ))
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?11:12,fontStyle:"italic",color:"#808080",marginTop:12,lineHeight:1.5}},
+            "Small constraint changes → large emergent behavior shifts."
+          )
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?11:12,fontStyle:"italic",color:"#808080",marginTop:16,textAlign:"center",lineHeight:1.6}},
+          "27 rounds on Qwen3-Coder-Next FP8. No cherry-picking. Full run logs on GitHub."
+        )
+      )
+    ),
+
+    // ─── EMAIL BAIT: after proof ───
+    e("div",{style:{padding:(isMobile?"32px ":"48px ")+px,maxWidth:700,margin:"0 auto",textAlign:"center"}},
+      e("div",{style:{background:"linear-gradient(135deg,rgba(96,108,56,0.06),rgba(212,163,115,0.04))",border:"1px solid rgba(212,163,115,0.12)",borderRadius:14,padding:isMobile?"24px 20px":"32px 36px"}},
+        e("p",{style:{fontFamily:S,fontSize:isMobile?18:22,color:"#e8e0d0",marginBottom:6,fontWeight:400}},"Want the full benchmark data?"),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?13:15,fontStyle:"italic",color:"#a09880",marginBottom:isMobile?16:22,lineHeight:1.6}},
+          "Raw SAB logs, VLM fixtures, evolution traces — plus early access to v1.0 features. Free, no spam."
+        ),
+        e(EmailForm,{mobile:isMobile})
+      )
+    ),
+
+    // ═══ VLM BENCHMARK ═══
+    e(LazySection,{height:600},e(Fade,{nav:"VLM",style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.03),transparent)"}},
+      e("div",{style:{maxWidth:1000,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},
+          e("a",{href:GH+"src/vlm_bench/",target:"_blank",rel:"noopener",style:{color:A,textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.3)"}},"VISUAL LANGUAGE MODEL BENCHMARK")
+        ),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:12}},
+          "It sees TUIs. It reads flamegraphs.",e("br"),e("span",{style:{fontStyle:"italic",color:A}},"It writes layouts from mockups.")
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:560,margin:"0 auto "+(isMobile?"28px":"40px"),lineHeight:1.7}},
+          "19 scenarios across 6 difficulty levels. Three models tested on real hardware. PNG fixtures generated from TUI screenshots."
+        ),
+        // Model comparison table
+        e("div",{style:{overflowX:"auto",marginBottom:isMobile?20:32}},
+          e("table",{style:{width:"100%",borderCollapse:"collapse",fontFamily:M,fontSize:isMobile?9:11,minWidth:isMobile?500:"auto"}},
+            e("thead",null,
+              e("tr",null,
+                e("th",{style:{padding:isMobile?"8px 6px":"10px 14px",textAlign:"left",color:"#777",borderBottom:"1px solid rgba(212,163,115,0.1)",fontSize:isMobile?8:9,letterSpacing:"0.06em"}},"LEVEL"),
+                ...["Qwen3.5-9B","Qwen3-VL-30B","Qwen3.5-35B"].map(m=>
+                  e("th",{key:m,style:{padding:isMobile?"8px 6px":"10px 14px",textAlign:"center",color:"#a09880",borderBottom:"1px solid rgba(212,163,115,0.1)",fontSize:isMobile?8:9,letterSpacing:"0.04em"}},m)
+                )
+              )
+            ),
+            e("tbody",null,
+              ...[
+                {level:"L1 TUI State",diff:"Easy",scores:[{v:88,r:"BLOOM"},{v:62,r:"GROW"},{v:50,r:"WILT"}]},
+                {level:"L2 Diagnostics",diff:"Medium",scores:[{v:39,r:"WILT"},{v:67,r:"GROW"},{v:67,r:"GROW"}]},
+                {level:"L3 Architecture",diff:"Hard",scores:[{v:30,r:"WILT"},{v:47,r:"GROW"},{v:63,r:"BLOOM"}]},
+                {level:"L4 Profiling",diff:"VeryHard",scores:[{v:100,r:"BLOOM"},{v:100,r:"BLOOM"},{v:100,r:"BLOOM"}]},
+                {level:"L5 Layout",diff:"Extreme",scores:[{v:85,r:"BLOOM"},{v:100,r:"BLOOM"},{v:100,r:"BLOOM"}]},
+                {level:"Mega Evolution",diff:"Mega",scores:[{v:53,r:"BLOOM"},{v:33,r:"WILT"},{v:76,r:"BLOOM"}]},
+                {level:"Overall",diff:"",scores:[{v:66,r:"BLOOM"},{v:68,r:"BLOOM"},{v:76,r:"BLOOM"}]},
+              ].map((row,ri)=>{
+                const isTotal=row.level==="Overall";
+                const rc=r=>r==="BLOOM"?G:r==="GROW"?A:r==="WILT"?"#BC6C25":"#C75B3A";
+                return e("tr",{key:ri,style:{borderBottom:isTotal?"none":"1px solid rgba(212,163,115,0.05)",background:isTotal?"rgba(96,108,56,0.06)":"transparent"}},
+                  e("td",{style:{padding:isMobile?"7px 6px":"9px 14px",color:isTotal?G:"#a09880",fontWeight:isTotal?500:400}},
+                    row.level,row.diff?e("span",{style:{fontSize:isMobile?7:8,color:"#808080",marginLeft:6}},row.diff):null
+                  ),
+                  ...row.scores.map((s,si)=>e("td",{key:si,style:{padding:isMobile?"7px 6px":"9px 14px",textAlign:"center"}},
+                    e("span",{style:{color:rc(s.r),fontWeight:isTotal?500:400}},s.v+"%"),
+                    e("span",{style:{fontSize:isMobile?7:8,color:rc(s.r),opacity:.7,marginLeft:4}},s.r)
+                  ))
+                );
+              })
+            )
+          )
+        ),
+        // Hardware specs
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?8:12}},
+          ...[
+            {model:"Qwen3.5-9B Q8",hw:"RTX 4090",tokens:"17.9K",time:"118s",c:"#8B7355"},
+            {model:"Qwen3-VL-30B FP8",hw:"2× RTX 4090",tokens:"38.7K",time:"486s",c:A},
+            {model:"Qwen3.5-35B Q8",hw:"M2 Max 96GB",tokens:"60.5K",time:"3,186s",c:G},
+          ].map((m,i)=>e("div",{key:i,style:{background:"rgba(0,0,0,0.25)",border:"1px solid "+(m.c+"22"),borderRadius:8,padding:isMobile?"10px 12px":"12px 16px"}},
+            e("div",{style:{color:m.c,fontSize:isMobile?10:11,marginBottom:4}},m.model),
+            e("div",{style:{color:"#888",fontSize:isMobile?9:10}},m.hw),
+            e("div",{style:{display:"flex",gap:12,marginTop:6,color:"#808080",fontSize:isMobile?8:9}},
+              e("span",null,m.tokens+" tokens"),
+              e("span",null,m.time)
+            )
+          ))
+        ),
+        // Level descriptions
+        e("div",{style:{marginTop:isMobile?20:28,display:"grid",gridTemplateColumns:isMobile?"repeat(2,1fr)":"repeat(6,1fr)",gap:2}},
+          ...[
+            {l:"L1",n:"TUI State",d:"Terminal recognition"},
+            {l:"L2",n:"Diagnostics",d:"Compiler error parsing"},
+            {l:"L3",n:"Architecture",d:"Diagram comprehension"},
+            {l:"L4",n:"Profiling",d:"Flamegraph analysis"},
+            {l:"L5",n:"Layout",d:"Mockup → ratatui code"},
+            {l:"Mega",n:"Evolution",d:"Multi-image scoring"},
+          ].map((lv,i)=>e("div",{key:i,style:{background:"rgba(212,163,115,0.025)",padding:isMobile?"8px 6px":"10px 12px",textAlign:"center"}},
+            e("div",{style:{color:A,fontSize:isMobile?10:11,marginBottom:2}},lv.l),
+            e("div",{style:{color:"#a09880",fontSize:isMobile?8:9,marginBottom:2}},lv.n),
+            e("div",{style:{color:"#808080",fontSize:isMobile?7:8}},lv.d)
+          ))
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?11:12,fontStyle:"italic",color:"#808080",marginTop:16,textAlign:"center",lineHeight:1.6}},
+          "All 3 models hit 100% BLOOM on L4 Profiling. The 35B model was first to pass Hard threshold (60%) on L3 Architecture."
+        )
+      )
+    )),
+
+    // ═══ COMPLEXITY PHASES ═══
+    e(LazySection,{height:500},e(Fade,{nav:"Science",style:{padding:secPad,maxWidth:1100,margin:"0 auto"}},
+      e("div",{className:"grid-2col"},
+        e("div",null,
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12}},"WOLFRAM'S FOUR CLASSES"),
+          e("h2",{style:{fontSize:isMobile?"clamp(26px,7vw,36px)":"clamp(30px,4.5vw,50px)",lineHeight:1.1,marginBottom:18,fontWeight:400}},"Not all complexity",e("br"),"is created equal."),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?15:17,lineHeight:1.75,color:"#a09880",fontStyle:"italic",marginBottom:24}},PHASES[phase].desc),
+          // Phase buttons
+          e("div",{className:isMobile?"phase-buttons":"",style:{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:2,background:"rgba(40,54,24,0.25)",borderRadius:10,padding:3,border:"1px solid rgba(212,163,115,0.1)"}},
+            ...PHASES.map((p,i)=>e("button",{key:i,onClick:()=>setPhase(i),style:{background:phase===i?"rgba(212,163,115,0.15)":"transparent",border:"none",color:phase===i?p.color:"#9a9383",padding:isMobile?"12px 8px":"10px 14px",borderRadius:8,cursor:"pointer",fontSize:isMobile?11:12,fontFamily:M,transition:"all 0.3s",lineHeight:1.3,minHeight:isMobile?46:"auto"}},
+              e("span",{style:{fontSize:isMobile?14:17,display:"block",marginBottom:2}},p.icon),p.label
+            ))
+          ),
+          !isMobile&&e("p",{style:{fontFamily:M,fontSize:10,color:"#6e6e6e",marginTop:14,lineHeight:1.9}},"↑ Toggle phases. Watch the hero particles respond.")
+        ),
+        // Phase map card
+        e("div",{style:{background:"rgba(212,163,115,0.03)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:12,padding:isMobile?20:28}},
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:"#777",marginBottom:16,letterSpacing:"0.06em"}},"PHASE TRANSITION MAP"),
+          ...PHASES.map((p,i)=>e("div",{key:i,style:{display:"flex",alignItems:"center",gap:isMobile?10:14,padding:"10px 0",borderBottom:i<3?"1px solid rgba(212,163,115,0.05)":"none",opacity:phase===i?1:.35,transition:"opacity 0.4s"}},
+            e("span",{style:{fontSize:16,width:24,textAlign:"center",flexShrink:0}},p.icon),
+            e("div",{style:{flex:1}},
+              e("div",{style:{fontFamily:M,fontSize:11,color:p.color,marginBottom:4}},p.label),
+              e("div",{style:{height:3,borderRadius:2,background:"rgba(212,163,115,0.08)",overflow:"hidden"}},
+                e("div",{style:{height:"100%",width:phase===i?p.bar+"%":"0%",background:p.color,borderRadius:2,transition:"width 0.7s ease"}})
+              )
+            ),
+            !isMobile&&e("span",{style:{fontFamily:M,fontSize:10,color:"#6e6e6e",minWidth:65,textAlign:"right"}},"entropy: "+p.entropy)
+          )),
+          e("div",{style:{marginTop:16,padding:"10px 12px",background:phase===3?"rgba(96,108,56,0.1)":"transparent",borderRadius:8,border:phase===3?"1px solid rgba(96,108,56,0.2)":"1px solid transparent",transition:"all 0.4s",fontFamily:S,fontSize:isMobile?13:14,fontStyle:"italic",color:phase===3?"#a09880":"#7a7a7a"}},
+            phase===3?"✦ Complexity ≠ entropy. Organized complexity — structure with surprise.":"Select 'Complex' to see the selfware state."
+          )
+        )
+      )
+    )),
+
+
+    // ═══ RECURSIVE SELF-IMPROVEMENT ═══
+    e(Fade,{nav:"Evolution",style:{padding:secPad,maxWidth:1100,margin:"0 auto"}},
+      e("div",{className:"grid-2col",style:{alignItems:"center"}},
+        // PDVR cycle — desktop: circular, mobile: linear
+        isMobile
+          ? e("div",{style:{display:"flex",alignItems:"center",justifyContent:"center",gap:0,flexWrap:"wrap",marginBottom:8}},
+              ...["PLAN","DO","VERIFY","REFLECT"].flatMap((l,i)=>{
+                const c=[A,G,"#BC6C25","#8B7355"];
+                const node=e("div",{key:l,style:{fontFamily:M,fontSize:10,color:c[i],letterSpacing:"0.08em",background:"rgba(12,15,8,0.9)",border:"1px solid "+c[i]+"33",padding:"8px 12px",borderRadius:8,textAlign:"center"}},l);
+                if(i<3)return[node,e("span",{key:"a"+i,style:{color:"rgba(212,163,115,0.3)",fontSize:14,padding:"0 4px"}},"→")];
+                return[node];
+              }),
+              e("div",{style:{width:"100%",textAlign:"center",fontFamily:M,fontSize:9,color:"#6e6e6e",marginTop:6,letterSpacing:"0.06em"}},"↻ COGNITIVE CYCLE")
+            )
+          : e("div",{style:{display:"flex",justifyContent:"center"}},
+              e("div",{style:{position:"relative",width:260,height:260}},
+                ...["PLAN","DO","VERIFY","REFLECT"].map((l,i)=>{
+                  const a=(i*Math.PI*2)/4-Math.PI/2,r=95,x=130+Math.cos(a)*r,y=130+Math.sin(a)*r;
+                  const c=[A,G,"#BC6C25","#8B7355"];
+                  return e("div",{key:l,style:{position:"absolute",left:x-36,top:y-20,width:72,textAlign:"center",fontFamily:M,fontSize:10,color:c[i],letterSpacing:"0.08em",background:"rgba(12,15,8,0.9)",border:"1px solid "+c[i]+"33",padding:"9px 6px",borderRadius:8}},l);
+                }),
+                e("svg",{viewBox:"0 0 260 260",style:{position:"absolute",inset:0,width:"100%",height:"100%"}},
+                  ...[0,1,2,3].map(i=>{
+                    const a1=(i*Math.PI*2)/4-Math.PI/2,a2=((i+1)*Math.PI*2)/4-Math.PI/2,r=95;
+                    return e("line",{key:i,x1:130+Math.cos(a1+.38)*(r-14),y1:130+Math.sin(a1+.38)*(r-14),x2:130+Math.cos(a2-.38)*(r-14),y2:130+Math.sin(a2-.38)*(r-14),stroke:"rgba(212,163,115,0.2)",strokeWidth:1,markerEnd:"url(#arr)"});
+                  }),
+                  e("defs",null,e("marker",{id:"arr",markerWidth:6,markerHeight:6,refX:5,refY:3,orient:"auto"},e("path",{d:"M0,0 L6,3 L0,6",fill:"rgba(212,163,115,0.3)"})))
+                ),
+                e("div",{style:{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",fontFamily:M,fontSize:10,color:"#7a7a7a",textAlign:"center",lineHeight:1.6}},"COGNITIVE",e("br"),"CYCLE")
+              )
+            ),
+        e("div",null,
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12}},
+            e("a",{href:GH+"src/evolution/",target:"_blank",rel:"noopener",style:{color:A,textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.3)"}},"TWO LOOPS, NESTED")
+          ),
+          e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,34px)":"clamp(28px,4vw,46px)",lineHeight:1.12,marginBottom:18,fontWeight:400}},
+            "The loop that",e("br"),e("span",{style:{fontStyle:"italic",color:A}},"improves the loop.")
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880",marginBottom:14}},
+            e("strong",{style:{color:"#c0b090"}},"Inner loop: "),
+            "PDVR cognitive cycle. Working memory tracks hypotheses. Episodic memory persists across sessions."
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880",marginBottom:18}},
+            e("strong",{style:{color:"#c0b090"}},"Outer loop: "),
+            "Evolution Engine. The LLM proposes edits to Selfware's own source, compiles, evaluates fitness, selects improvements."
+          ),
+          e("div",{style:{display:"flex",gap:16,fontFamily:M,fontSize:isMobile?11:12,marginBottom:isMobile?20:28}},
+            e("span",{style:{color:G,display:"flex",alignItems:"center",gap:6}},
+              e("span",{style:{display:"inline-block",width:8,height:8,borderRadius:"50%",background:G,animation:"pulse 2s ease infinite"}}),"BLOOM"
+            ),
+            e("span",{style:{color:"#C75B3A",display:"flex",alignItems:"center",gap:6}},
+              e("span",{style:{display:"inline-block",width:8,height:8,borderRadius:"50%",background:"#C75B3A"}}),"FROST"
+            )
+          ),
+          // Fitness weights
+          e("div",{style:{background:"rgba(0,0,0,0.25)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:10,padding:isMobile?14:18}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#777",letterSpacing:"0.08em",marginBottom:10}},"COMPOSITE FITNESS FUNCTION"),
+            e("div",{style:{display:"flex",borderRadius:6,overflow:"hidden",height:isMobile?20:24,marginBottom:8}},
+              ...[
+                {w:50,l:"SAB",c:G},
+                {w:25,l:"Tokens",c:A},
+                {w:15,l:"Latency",c:"#BC6C25"},
+                {w:5,l:"Cov",c:"#8B7355"},
+                {w:5,l:"Bin",c:"#808080"},
+              ].map((seg,i)=>e("div",{key:i,title:seg.l+" "+seg.w+"%",style:{width:seg.w+"%",background:seg.c,display:"flex",alignItems:"center",justifyContent:"center",fontSize:isMobile?7:8,fontFamily:M,color:"#0c0f08",fontWeight:500,letterSpacing:"0.02em",borderRight:i<4?"1px solid #0c0f08":"none"}},seg.w>=15?seg.l:""))
+            ),
+            e("div",{style:{display:"flex",flexWrap:"wrap",gap:isMobile?"4px 10px":"4px 14px"}},
+              ...[
+                {l:"SAB Score",w:"50%",c:G},
+                {l:"Token Efficiency",w:"25%",c:A},
+                {l:"Latency",w:"15%",c:"#BC6C25"},
+                {l:"Coverage",w:"5%",c:"#8B7355"},
+                {l:"Binary Size",w:"5%",c:"#808080"},
+              ].map((f,i)=>e("span",{key:i,style:{fontFamily:M,fontSize:isMobile?8:9,color:f.c}},f.l+" "+f.w))
+            )
+          )
+        )
+      )
+    ),
+
+    // ═══ VISUAL AGENT ═══
+    e(Fade,{nav:"Vision",style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.03),transparent)"}},
+      e("div",{style:{maxWidth:1000,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"VISUAL INTELLIGENCE"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:12}},
+          "It can ",e("span",{style:{fontStyle:"italic",color:A}},"see.")
+        ),
+        e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:560,margin:"0 auto "+(isMobile?"28px":"40px"),lineHeight:1.7}},
+          "Screenshot capture, vision analysis, visual regression testing. An autonomous feedback loop that captures, critiques, and iterates — until the design scores above threshold."
+        ),
+        e("div",{className:"grid-2col",style:{gap:isMobile?16:24,alignItems:"start"}},
+          // Left: the loop flow
+          e("div",null,
+            e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:G,letterSpacing:"0.1em",marginBottom:16}},"AUTONOMOUS FEEDBACK LOOP"),
+            ...[
+              {step:"CAPTURE",desc:"Screenshot screen, window, or URL via headless browser",icon:"📸",c:A},
+              {step:"ANALYZE",desc:"Vision model scores composition, hierarchy, readability",icon:"🔍",c:G},
+              {step:"SCORE",desc:"Structured JSON — 5 dimensions, 0-100 each",icon:"📊",c:"#BC6C25"},
+              {step:"ITERATE",desc:"Agent applies suggestions, re-captures. Max 5 rounds.",icon:"🔄",c:"#8B7355"},
+            ].map((s,i)=>e("div",{key:i,style:{display:"flex",gap:isMobile?10:14,alignItems:"flex-start",marginBottom:isMobile?14:18}},
+              e("div",{style:{width:isMobile?32:38,height:isMobile?32:38,borderRadius:8,background:"rgba(0,0,0,0.3)",border:"1px solid "+s.c+"33",display:"flex",alignItems:"center",justifyContent:"center",fontSize:isMobile?14:16,flexShrink:0}},s.icon),
+              e("div",null,
+                e("div",{style:{fontFamily:M,fontSize:isMobile?11:12,color:s.c,marginBottom:3,letterSpacing:"0.04em"}},s.step),
+                e("div",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?12:13,color:"#888",lineHeight:1.5}},s.desc)
+              )
+            ))
+          ),
+          // Right: score visualization
+          e("div",{style:{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(212,163,115,0.1)",borderRadius:12,padding:isMobile?18:24}},
+            e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:isMobile?14:20}},
+              e("span",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#777",letterSpacing:"0.08em"}},"VISUAL CRITIC SCORES"),
+              e("span",{style:{fontFamily:M,fontSize:isMobile?10:11,color:G}},"iteration 3/5")
+            ),
+            e(VisualScoresPanel,{mobile:isMobile}),
+            e("div",{style:{marginTop:isMobile?14:18,padding:"10px 12px",background:"rgba(96,108,56,0.08)",borderRadius:8,border:"1px solid rgba(96,108,56,0.15)"}},
+              e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center"}},
+                e("span",{style:{fontFamily:M,fontSize:isMobile?11:12,color:G}},"Overall: 82/100"),
+                e("span",{style:{fontFamily:M,fontSize:9,color:"#888",letterSpacing:"0.06em"}},"THRESHOLD: 80 ✓")
+              )
+            )
+          )
+        ),
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(4,1fr)",gap:2,marginTop:isMobile?24:36}},
+          ...[
+            {t:"screen_capture",d:"Screenshot any screen, window, or region",s:"src/tools/screen_capture.rs"},
+            {t:"browser_screenshot",d:"Headless Chrome/Playwright full-page capture",s:"src/tools/browser.rs"},
+            {t:"vision_analyze",d:"Send to any VLM for structured analysis",s:"src/tools/vision.rs"},
+            {t:"vision_compare",d:"Pixel + semantic visual regression testing",s:"src/tools/vision.rs"},
+          ].map((tool,i)=>e("div",{key:i,style:{background:"rgba(212,163,115,0.025)",padding:isMobile?"12px 10px":"14px 16px"}},
+            e("a",{href:GH+tool.s,target:"_blank",rel:"noopener",style:{fontFamily:M,fontSize:isMobile?10:11,color:A,display:"block",marginBottom:4,textDecoration:"none"}},tool.t),
+            e("div",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?11:12,color:"#888",lineHeight:1.4}},tool.d)
+          ))
+        )
+      )
+    ),
+
+    // ═══ FITNESS IS SACRED ═══
+    e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.03),transparent)"}},
+      e("div",{style:{maxWidth:900,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},
+          e("a",{href:GH+"src/safety/",target:"_blank",rel:"noopener",style:{color:A,textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.3)"}},"CONSTRAINTS ARE PHYSICS")
+        ),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,7vw,34px)":"clamp(28px,4vw,46px)",lineHeight:1.15,marginBottom:14,fontWeight:400,textAlign:"center"}},"Fitness is sacred."),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?14:17,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:560,margin:"0 auto "+(isMobile?"32px":"48px"),lineHeight:1.7}},
+          "Entropy is removing constraints. Organized complexity is adding the ",e("em",null,"right")," constraints."
+        ),
+        e("div",{className:"grid-2col",style:{gap:isMobile?16:24}},
+          e("div",{style:{background:"rgba(212,163,115,0.03)",border:"1px solid rgba(212,163,115,0.1)",borderRadius:12,padding:isMobile?20:28}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.1em",marginBottom:16}},"IMMUTABLE INVARIANTS"),
+            ...INVS.map((inv,i)=>e("div",{key:i,style:{display:"flex",gap:8,alignItems:"flex-start",marginBottom:10,fontFamily:S,fontSize:isMobile?13:14,color:"#a09880",lineHeight:1.6}},
+              e("span",{style:{color:"#C75B3A",fontFamily:M,fontSize:11,flexShrink:0,marginTop:2}},"✗"),inv
+            ))
+          ),
+          e("div",{style:{background:"rgba(96,108,56,0.04)",border:"1px solid rgba(96,108,56,0.12)",borderRadius:12,padding:isMobile?20:28}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.1em",marginBottom:16}},"PROTECTED GROVES"),
+            ...PROT.map((p,i)=>e("div",{key:i,style:{fontFamily:M,fontSize:isMobile?11:13,color:"#888",marginBottom:8,padding:"7px 10px",background:"rgba(0,0,0,0.2)",borderRadius:6,wordBreak:"break-all"}},"🛡️ "+p)),
+            e("p",{style:{fontFamily:S,fontSize:isMobile?12:13,fontStyle:"italic",color:"#808080",marginTop:14,lineHeight:1.6}},"The evaluator cannot be modified by the thing being evaluated.")
+          )
+        )
+      )
+    ),
+
+    // ═══ FEATURES + CLI (merged) ═══
+    e(Fade,{nav:"Toolkit",style:{padding:secPad,maxWidth:1100,margin:"0 auto"}},
+      e("div",{style:{textAlign:"center",maxWidth:600,margin:"0 auto "+(isMobile?"32px":"48px")}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12}},"YOUR TOOLKIT"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400}},
+          "54 tools. 6 commands. ",e("span",{style:{fontStyle:"italic"}},"One binary.")
+        )
+      ),
+      e("div",{className:"grid-3col"},
+        ...[
+          {icon:"🌊",title:"Multi-Agent Swarm",desc:"6 specialized roles — Architect, Coder, Tester, Reviewer, DevOps, Security. Up to 16 concurrent.",cmd:"selfware multi-chat",src:"src/orchestration/"},
+          {icon:"🧬",title:"Evolution Engine",desc:"LLM proposes edits to its own source. Compile, test, evaluate fitness. Only BLOOMs survive.",cmd:"selfware evolve",src:"src/evolution/"},
+          {icon:"🔄",title:"PDVR Cognition",desc:"Plan → Do → Verify → Reflect. Working memory + episodic memory across sessions.",cmd:"selfware run <task>",src:"src/cognitive/"},
+          {icon:"🌱",title:"Digital Garden",desc:"Files as plants with growth stages. selfware garden visualizes codebase health.",cmd:"selfware garden ./src",src:"src/ui/garden.rs"},
+          {icon:"❄️",title:"Frost Recovery",desc:"Checkpoint seeds survive crashes. Resume any session from last known state.",cmd:"selfware resume",src:"src/session/checkpoint.rs"},
+          {icon:"🛡️",title:"Safety Guardians",desc:"Path validation, command filtering, SSRF protection, symlink guards. 4 autonomy levels.",cmd:"selfware chat --level 3",src:"src/safety/"},
+        ].map((item,i)=>e("div",{key:i,style:{background:"rgba(212,163,115,0.025)",border:"1px solid rgba(212,163,115,0.06)",padding:isMobile?20:28}},
+          e("span",{style:{fontSize:isMobile?22:26,display:"block",marginBottom:12}},item.icon),
+          e("h3",{style:{fontFamily:M,fontSize:isMobile?11:12,color:A,marginBottom:8,letterSpacing:"0.05em"}},item.title),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?13:14,lineHeight:1.65,color:"#888",marginBottom:10}},item.desc),
+          e("div",{style:{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}},
+            e("div",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#6e6e6e",background:"rgba(0,0,0,0.25)",padding:"4px 10px",borderRadius:5,display:"inline-block"}},
+              e("span",{style:{color:G}},"$ "),item.cmd
+            ),
+            e("a",{href:GH+item.src,target:"_blank",rel:"noopener",style:{fontFamily:M,fontSize:isMobile?8:9,color:"#808080",textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.15)"}},item.src)
+          )
+        ))
+      ),
+      e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#6e6e6e",textAlign:"center",marginTop:isMobile?16:20,letterSpacing:"0.04em"}},
+        "Also: analyze · journal · status · workflow · dashboard · demo"
+      ),
+      // TUI previews
+      e("div",{style:{marginTop:isMobile?28:40}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?10:10,color:"#808080",letterSpacing:"0.1em",marginBottom:12,textAlign:"center"}},"WHAT IT LOOKS LIKE"),
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?12:16}},
+          ...TUI_CARDS.map((card,i)=>e(TuiCard,{key:i,card,mobile:isMobile}))
+        )
+      )
+    ),
+
+    // ═══ REAL PROJECT ═══
+    e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(96,108,56,0.03),transparent)"}},
+      e("div",{style:{maxWidth:1000,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"BATTLE-TESTED"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:12}},
+          "42,000 lines of Rust.",e("br"),e("span",{style:{fontStyle:"italic",color:G}},"One command.")
+        ),
+        e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:580,margin:"0 auto "+(isMobile?"28px":"36px"),lineHeight:1.7}},
+          "A real-time multiplayer game server — WebRTC networking, SIMD physics, 16-agent AI, FlatBuffers protocol. Selfware scanned it, found critical vulnerabilities, and proposed fixes."
+        ),
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr 1fr":"repeat(4,1fr)",gap:2,marginBottom:isMobile?20:28}},
+          ...[
+            {v:"133",l:"Rust files",c:A},
+            {v:"42.6K",l:"Lines of code",c:G},
+            {v:"3",l:"Critical bugs found",c:"#C75B3A"},
+            {v:"18",l:"Modules refactored",c:"#BC6C25"},
+          ].map((s,i)=>e("div",{key:i,style:{background:"rgba(0,0,0,0.3)",padding:isMobile?"16px 8px":"22px 14px",textAlign:"center"}},
+            e("div",{style:{fontSize:isMobile?20:26,fontWeight:400,color:s.c,marginBottom:3}},s.v),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#777",letterSpacing:"0.06em"}},s.l)
+          ))
+        ),
+        e("div",{className:"grid-2col",style:{gap:isMobile?16:24}},
+          e("div",{style:{background:"rgba(199,91,58,0.04)",border:"1px solid rgba(199,91,58,0.12)",borderRadius:12,padding:isMobile?18:24}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#C75B3A",letterSpacing:"0.1em",marginBottom:14}},"BUGS FOUND AUTONOMOUSLY"),
+            ...[
+              {bug:"Delta bitmask truncation",impact:"u16 cast to u8 — shields and flags silently lost",sev:"CRITICAL"},
+              {bug:"ObjectPool race condition",impact:"TOCTOU on max size — unbounded memory growth",sev:"CRITICAL"},
+              {bug:"Shell command injection",impact:"Unsanitized SMS command construction — RCE vector",sev:"CRITICAL"},
+            ].map((b,i)=>e("div",{key:i,style:{marginBottom:i<2?12:0,paddingBottom:i<2?12:0,borderBottom:i<2?"1px solid rgba(199,91,58,0.08)":"none"}},
+              e("div",{style:{fontFamily:M,fontSize:isMobile?11:12,color:"#c0b090",marginBottom:3}},b.bug),
+              e("div",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?12:13,color:"#888",lineHeight:1.5,marginBottom:4}},b.impact),
+              e("span",{style:{fontFamily:M,fontSize:9,color:"#C75B3A",background:"rgba(199,91,58,0.1)",padding:"2px 8px",borderRadius:4,letterSpacing:"0.06em"}},b.sev)
+            ))
+          ),
+          e("div",{style:{background:"rgba(96,108,56,0.04)",border:"1px solid rgba(96,108,56,0.12)",borderRadius:12,padding:isMobile?18:24}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:G,letterSpacing:"0.1em",marginBottom:14}},"WHAT THE SWARM DID"),
+            ...[
+              "Split 1,787-line monolith into 18 focused modules",
+              "Generated regression tests for each critical fix",
+              "Mapped all 40+ undocumented environment variables",
+              "Identified O(N²) bot AI bottleneck with spatial index fix",
+              "Flagged join-throughput collapse at 73+ concurrent clients",
+            ].map((t,i)=>e("div",{key:i,style:{display:"flex",gap:8,alignItems:"flex-start",marginBottom:8}},
+              e("span",{style:{color:G,fontFamily:M,fontSize:11,flexShrink:0,marginTop:1}},"✓"),
+              e("span",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?12:13,color:"#a09880",lineHeight:1.5}},t)
+            ))
+          )
+        ),
+        e("p",{style:{fontFamily:"'Newsreader',serif",fontSize:isMobile?13:14,fontStyle:"italic",color:"#888",textAlign:"center",marginTop:isMobile?20:28,lineHeight:1.7}},
+          "Solo developer estimate: 3-4 months. Selfware swarm: ",e("span",{style:{color:G}},"hours"),". ",
+          e("a",{href:"https://github.com/TrebuchetNetwork/massive_game_server",target:"_blank",rel:"noopener",style:{color:A,textDecoration:"none",borderBottom:"1px solid rgba(212,163,115,0.3)"}},"View the project →")
+        )
+      )
+    ),
+
+    // ─── EMAIL BAIT: after case study ───
+    e("div",{style:{padding:(isMobile?"32px ":"48px ")+px,maxWidth:700,margin:"0 auto",textAlign:"center"}},
+      e("div",{style:{background:"linear-gradient(135deg,rgba(212,163,115,0.04),rgba(96,108,56,0.06))",border:"1px solid rgba(96,108,56,0.12)",borderRadius:14,padding:isMobile?"24px 20px":"32px 36px"}},
+        e("div",{style:{fontSize:28,marginBottom:8}},"🦊"),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?18:22,color:"#e8e0d0",marginBottom:6,fontWeight:400}},"Be first to know when v1.0 ships."),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?13:15,fontStyle:"italic",color:"#a09880",marginBottom:isMobile?16:22,lineHeight:1.6}},
+          "Changelog drops, hardware guides, and community builds. One email when it matters."
+        ),
+        e(EmailForm,{mobile:isMobile})
+      )
+    ),
+
+    // ═══ COMPETITOR COMPARISON + COST ═══
+    e(LazySection,{height:500},e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.03),transparent)"}},
+      e("div",{style:{maxWidth:1000,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"HOW IT COMPARES"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(26px,3.5vw,42px)",lineHeight:1.2,marginBottom:12,fontWeight:400,textAlign:"center"}},
+          "The only tool that ",e("span",{style:{fontStyle:"italic",color:A}},"owns its own loop.")
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",textAlign:"center",maxWidth:520,margin:"0 auto "+(isMobile?"24px":"36px"),lineHeight:1.7}},
+          "When local LLMs are good enough — why rent intelligence?"
+        ),
+        // Comparison table
+        e("div",{style:{overflowX:"auto"}},
+          e("table",{style:{width:"100%",borderCollapse:"collapse",fontFamily:M,fontSize:isMobile?9:11,minWidth:isMobile?580:"auto"}},
+            e("thead",null,
+              e("tr",null,
+                e("th",{style:{padding:isMobile?"8px 6px":"10px 14px",textAlign:"left",color:"#808080",borderBottom:"1px solid rgba(212,163,115,0.1)",fontSize:isMobile?8:9}},""),
+                ...["Selfware","Cursor","Copilot","Aider","SWE-Agent"].map((t,i)=>
+                  e("th",{key:t,style:{padding:isMobile?"8px 4px":"10px 12px",textAlign:"center",color:i===0?G:"#888",borderBottom:"1px solid rgba(212,163,115,0.1)",fontSize:isMobile?8:10,letterSpacing:"0.04em",fontWeight:i===0?500:400}},t)
+                )
+              )
+            ),
+            e("tbody",null,
+              ...[
+                {f:"Runs locally",vals:[1,0,0,1,1]},
+                {f:"Self-improving",vals:[1,0,0,0,0]},
+                {f:"Multi-agent",vals:[1,0,0,0,1]},
+                {f:"Visual agent",vals:[1,0,0,0,0]},
+                {f:"Your data stays local",vals:[1,0,0,1,1]},
+                {f:"No subscription",vals:[1,0,0,1,1]},
+                {f:"Any LLM backend",vals:[1,0,0,1,0]},
+                {f:"Evolution engine",vals:[1,0,0,0,0]},
+                {f:"Codebase health viz",vals:[1,0,0,0,0]},
+                {f:"Agentic benchmark",vals:[1,0,0,0,1]},
+              ].map((row,ri)=>e("tr",{key:ri,style:{borderBottom:"1px solid rgba(212,163,115,0.04)"}},
+                e("td",{style:{padding:isMobile?"6px 6px":"8px 14px",color:"#a09880",fontSize:isMobile?9:11}},row.f),
+                ...row.vals.map((v,vi)=>e("td",{key:vi,style:{padding:isMobile?"6px 4px":"8px 12px",textAlign:"center",fontSize:isMobile?11:13}},
+                  v?e("span",{style:{color:vi===0?G:"#a09880"}},"\u2713"):e("span",{style:{color:"#444"}},"\u2014")
+                ))
+              ))
+            )
+          )
+        ),
+        // Cost: Cloud vs Local — merged
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr",gap:isMobile?12:16,marginTop:isMobile?24:36}},
+          e("div",{style:{background:"rgba(199,91,58,0.04)",border:"1px solid rgba(199,91,58,0.12)",borderRadius:12,padding:isMobile?18:24}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#C75B3A",letterSpacing:"0.08em",marginBottom:12}},"CLOUD AI"),
+            ...[{l:"Cursor Pro",v:"$240/yr"},{l:"Copilot Business",v:"$228/yr"},{l:"API credits",v:"$600+/yr"},{l:"Your data",v:"leaves"}].map((r,i)=>e("div",{key:i,style:{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:i<3?"1px solid rgba(199,91,58,0.06)":"none",fontFamily:M,fontSize:isMobile?10:11}},
+              e("span",{style:{color:"#a09880"}},r.l),
+              e("span",{style:{color:i===3?"#C75B3A":"#888"}},r.v)
+            )),
+            e("div",{style:{marginTop:10,padding:"8px 12px",background:"rgba(199,91,58,0.08)",borderRadius:8,textAlign:"center"}},
+              e("span",{style:{fontFamily:M,fontSize:isMobile?14:18,color:"#C75B3A"}},"$600–1,000+"),
+              e("span",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888",marginLeft:6}},"/year")
+            )
+          ),
+          e("div",{style:{background:"rgba(96,108,56,0.04)",border:"1px solid rgba(96,108,56,0.12)",borderRadius:12,padding:isMobile?18:24}},
+            e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:G,letterSpacing:"0.08em",marginBottom:12}},"LOCAL (RTX 4090)"),
+            ...[{l:"GPU (one-time)",v:"~$1,600"},{l:"Electricity",v:"~$55/yr"},{l:"Selfware",v:"$0 (MIT)"},{l:"Your data",v:"stays"}].map((r,i)=>e("div",{key:i,style:{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:i<3?"1px solid rgba(96,108,56,0.06)":"none",fontFamily:M,fontSize:isMobile?10:11}},
+              e("span",{style:{color:"#a09880"}},r.l),
+              e("span",{style:{color:i===3?G:"#888"}},r.v)
+            )),
+            e("div",{style:{marginTop:10,padding:"8px 12px",background:"rgba(96,108,56,0.08)",borderRadius:8,textAlign:"center"}},
+              e("span",{style:{fontFamily:M,fontSize:isMobile?14:18,color:G}},"~$55/yr"),
+              e("span",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888",marginLeft:6}},"after GPU")
+            )
+          )
+        ),
+        e("p",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#908878",textAlign:"center",marginTop:isMobile?12:18,lineHeight:1.6}},
+          "150W × 8h/day × $0.12/kWh. GPU amortized over 5 years = $320/yr. Still cheaper than cloud year 1."
+        )
+      )
+    )),
+
+    // ═══ STATS ═══
+    e("div",{ref:statsRef,style:{padding:(isMobile?"48px ":"70px ")+px,maxWidth:1100,margin:"0 auto"}},
+      e("div",{className:"grid-5col",style:{background:"rgba(212,163,115,0.06)",borderRadius:12,overflow:"hidden"}},
+        ...[{n:54,s:"",l:"Tools"},{n:6800,s:"+",l:"Tests"},{n:16,s:"",l:"Agents"},{n:commitCount,s:"+",l:"Commits"},{n:90,s:"/100",l:"SAB Score"}].map((s,i)=>e("div",{key:i,style:{background:"#0c0f08",padding:isMobile?"24px 8px":"36px 16px",textAlign:"center"}},
+          e("div",{style:{fontSize:isMobile?"clamp(22px,6vw,32px)":"clamp(28px,3.5vw,44px)",fontWeight:400,color:A,marginBottom:4}},e(Num,{target:s.n,suffix:s.s,active:statsVis})),
+          e("div",{style:{fontFamily:M,fontSize:isMobile?10:10,color:"#908878",letterSpacing:"0.1em"}},s.l)
+        ))
+      )
+    ),
+
+    // ═══ TESTIMONIALS ═══
+    e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(212,163,115,0.02),transparent)"}},
+      e("div",{style:{maxWidth:900,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"EARLY ADOPTERS"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:isMobile?24:36}},
+          "What builders are saying."
+        ),
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?12:16}},
+          ...[
+            {q:"Pointed it at our 30K-line monolith. It found a race condition we'd missed for months. In minutes.",who:"Systems engineer",co:"Game server team"},
+            {q:"The evolution engine is unlike anything else. Watching it improve its own code is wild.",who:"ML researcher",co:"University lab"},
+            {q:"Finally, AI coding that doesn't phone home. Our security team signed off in a day.",who:"Staff engineer",co:"Defense contractor"},
+          ].map((t,i)=>e("div",{key:i,style:{background:"rgba(0,0,0,0.25)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:12,padding:isMobile?18:24}},
+            e("div",{style:{fontFamily:S,fontSize:isMobile?14:15,fontStyle:"italic",color:"#a09880",lineHeight:1.7,marginBottom:14}},
+              "\u201C"+t.q+"\u201D"
+            ),
+            e("div",{style:{display:"flex",alignItems:"center",gap:10}},
+              e("div",{style:{width:32,height:32,borderRadius:"50%",background:"rgba(212,163,115,0.08)",border:"1px solid rgba(212,163,115,0.15)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:A}},t.who[0]),
+              e("div",null,
+                e("div",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#c0b090"}},t.who),
+                e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888"}},t.co)
+              )
+            )
+          ))
+        )
+      )
+    ),
+
+    // ═══ CHANGELOG ═══
+    commits.length>0&&e(Fade,{style:{padding:(isMobile?"32px ":"48px ")+px,maxWidth:700,margin:"0 auto"}},
+      e("div",{style:{background:"rgba(0,0,0,0.25)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:12,padding:isMobile?18:24}},
+        e("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:isMobile?14:18}},
+          e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:A,letterSpacing:"0.12em"}},"RECENT ACTIVITY"),
+          e("a",{href:"https://github.com/architehc/selfware/commits",target:"_blank",rel:"noopener",style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888",textDecoration:"none"}},"view all \u2192")
+        ),
+        ...commits.map((c,i)=>e("div",{key:i,style:{display:"flex",gap:isMobile?8:12,alignItems:"flex-start",padding:"8px 0",borderBottom:i<commits.length-1?"1px solid rgba(212,163,115,0.05)":"none"}},
+          e("span",{style:{fontFamily:M,fontSize:isMobile?9:10,color:G,flexShrink:0,marginTop:1}},c.sha),
+          e("div",{style:{flex:1,minWidth:0}},
+            e("div",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#a09880",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},c.msg),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?8:9,color:"#888",marginTop:2}},c.date+" · "+c.author)
+          )
+        ))
+      )
+    ),
+
+    // ═══ QUICK START ═══
+    e(Fade,{nav:"Start",style:{padding:secPad,maxWidth:900,margin:"0 auto"}},
+      e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:A,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"GET STARTED"),
+      e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:isMobile?28:40}},
+        "Three commands.",e("br"),e("span",{style:{fontStyle:"italic",color:A}},"Your workshop is running.")
+      ),
+      e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"1fr 1fr 1fr",gap:isMobile?12:16}},
+        ...[
+          {step:"1",cmd:"cargo install selfware",note:"Install from crates.io. Requires Rust toolchain."},
+          {step:"2",cmd:"selfware init",note:"Setup wizard — choose your LLM endpoint and model."},
+          {step:"3",cmd:"selfware chat",note:"Start coding. Or selfware run <task> for autonomous mode."},
+        ].map((s,i)=>e("div",{key:i,style:{background:"rgba(212,163,115,0.03)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:12,padding:isMobile?18:22}},
+          e("div",{style:{fontFamily:M,fontSize:10,color:G,letterSpacing:"0.1em",marginBottom:10}},"STEP "+s.step),
+          e("div",{style:{fontFamily:M,fontSize:isMobile?12:13,color:"#e8e0d0",background:"rgba(0,0,0,0.35)",padding:"8px 12px",borderRadius:6,marginBottom:10}},
+            e("span",{style:{color:G}},"$ "),s.cmd
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?12:13,color:"#888",lineHeight:1.5,fontStyle:"italic"}},s.note)
+        ))
+      ),
+      e("p",{style:{fontFamily:S,fontSize:isMobile?13:14,color:"#888",textAlign:"center",marginTop:isMobile?20:28,lineHeight:1.7,fontStyle:"italic"}},
+        "Works with any OpenAI-compatible endpoint — ",
+        e("span",{style:{color:"#a09880"}},"Ollama, vLLM, LM Studio, llama.cpp, SGLang"),
+        ". Primary model: Qwen3.5 Coder."
+      )
+    ),
+
+    // ═══ HARDWARE ═══
+    e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(96,108,56,0.03),transparent)"}},
+      e("div",{style:{maxWidth:1000,margin:"0 auto"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.2em",marginBottom:12,textAlign:"center"}},"CAN I RUN IT?"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,textAlign:"center",marginBottom:isMobile?24:36}},
+          "If you have a GPU, ",e("span",{style:{fontStyle:"italic",color:G}},"you're ready.")
+        ),
+        // GPU tiers
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?12:16,marginBottom:isMobile?20:28}},
+          ...[
+            {tier:"Entry",gpu:"RTX 4060 Ti (16 GB)",model:"Qwen3.5 9B Q4",ctx:"16-32K",use:"Everyday coding, moderate tasks",c:"#8B7355",mac:"Mac 24 GB"},
+            {tier:"Recommended",gpu:"RTX 4090 / 3090 (24 GB)",model:"Qwen3.5 27B Q4",ctx:"32-64K",use:"Full SAB scenarios, multi-agent",c:A,mac:"Mac 64 GB"},
+            {tier:"Production",gpu:"RTX 5090 (32 GB) / H100",model:"Qwen3.5 35B-A3B Q4",ctx:"64-128K",use:"Best value. Full evolution engine.",c:G,mac:"Mac 96-128 GB"},
+          ].map((t,i)=>e("div",{key:i,style:{background:i===1?"rgba(212,163,115,0.04)":"rgba(0,0,0,0.2)",border:"1px solid "+(t.c+"22"),borderRadius:12,padding:isMobile?16:22,position:"relative"}},
+            i===1&&e("div",{style:{position:"absolute",top:isMobile?-8:-10,left:"50%",transform:"translateX(-50%)",fontFamily:M,fontSize:8,color:"#0c0f08",background:A,padding:"2px 10px",borderRadius:4,letterSpacing:"0.08em"}},"SWEET SPOT"),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:t.c,letterSpacing:"0.08em",marginBottom:10}},t.tier.toUpperCase()),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?12:13,color:"#e8e0d0",marginBottom:6}},t.gpu),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#a09880",marginBottom:4}},t.model),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?9:10,color:"#888",marginBottom:8}},"Context: "+t.ctx),
+            e("p",{style:{fontFamily:S,fontSize:isMobile?11:12,color:"#888",lineHeight:1.5,fontStyle:"italic",marginBottom:6}},t.use),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?8:9,color:"#808080",borderTop:"1px solid rgba(212,163,115,0.06)",paddingTop:6}},"Apple: "+t.mac)
+          ))
+        ),
+        // Backends
+        e("div",{style:{display:"flex",flexWrap:"wrap",gap:isMobile?6:8,justifyContent:"center",marginBottom:isMobile?12:16}},
+          ...["Ollama","vLLM","llama.cpp","LM Studio","MLX","SGLang"].map((b,i)=>
+            e("span",{key:i,style:{fontFamily:M,fontSize:isMobile?9:10,color:"#a09880",padding:isMobile?"5px 10px":"6px 14px",background:"rgba(212,163,115,0.04)",border:"1px solid rgba(212,163,115,0.08)",borderRadius:6}},b)
+          )
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?12:13,fontStyle:"italic",color:"#808080",textAlign:"center",lineHeight:1.6}},
+          "Any OpenAI-compatible endpoint. No API keys to cloud services needed."
+        )
+      )
+    ),
+
+    // ═══ CTA ═══
+    e("section",{style:{padding:(isMobile?"48px ":"60px ")+px+" "+(isMobile?"72px ":"100px ")+px,textAlign:"center"}},
+      e("div",{style:{maxWidth:520,margin:"0 auto",padding:isMobile?28:40,background:"rgba(212,163,115,0.03)",border:"1px solid rgba(212,163,115,0.1)",borderRadius:16}},
+        e("p",{style:{fontFamily:M,fontSize:11,color:A,letterSpacing:"0.2em",marginBottom:16}},"BEGIN"),
+        e("div",{style:{fontFamily:M,fontSize:isMobile?12:13,color:"#e8e0d0",background:"rgba(0,0,0,0.35)",padding:"10px 16px",borderRadius:8,marginBottom:10,display:"inline-block"}},
+          e("span",{style:{color:G}},"$ "),"cargo install selfware"
+        ),
+        e("p",{style:{fontFamily:M,fontSize:isMobile?10:11,color:"#908878",marginBottom:16,lineHeight:1.6}},
+          "or the quick path: ",e("span",{style:{color:"#a09880"}},"ollama pull qwen3-coder && cargo install selfware && selfware init")
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?13:14,fontStyle:"italic",color:"#908878",lineHeight:1.7}},
+          "MIT licensed. Linux, macOS, Windows.",e("br"),"Your hardware. Your data. Your loop."
+        )
+      )
+    ),
+
+    // ═══ GAME OF LIFE ═══
+    e(LazySection,{height:400},e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(96,108,56,0.03),transparent)"}},
+      e("div",{className:"grid-2col",style:{maxWidth:1100,margin:"0 auto",alignItems:"center"}},
+        e("div",null,
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.2em",marginBottom:12}},"AT THE EDGE OF CHAOS"),
+          e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,34px)":"clamp(28px,4vw,46px)",lineHeight:1.12,marginBottom:18,fontWeight:400}},
+            "Simple rules. Iterated.",e("br"),e("span",{style:{fontStyle:"italic",color:G}},"Until structure appears.")
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880",marginBottom:16}},
+            "Conway's Game of Life — three rules, infinite complexity. Nobody designs the gliders or the oscillators. They ",e("em",null,"emerge"),"."
+          ),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,lineHeight:1.8,color:"#a09880"}},
+            "Selfware's multi-agent swarm works the same way. Individual agents follow PDVR cycles. The collective behavior is a property of the ",e("em",null,"system"),", not any single agent."
+          )
+        ),
+        e("div",{style:{background:"rgba(0,0,0,0.3)",borderRadius:12,padding:isMobile?10:16,border:"1px solid rgba(96,108,56,0.15)"}},
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:10,color:"#908878",letterSpacing:"0.1em",marginBottom:8}},
+            "GAME OF LIFE — ",e("span",{style:{color:G}},"NEW")," · ",e("span",{style:{color:A}},"MATURE")
+          ),
+          e(GoL,{w:isMobile?42:48,h:isMobile?28:32,mobile:isMobile}),
+          e("p",{style:{fontFamily:M,fontSize:isMobile?11:10,color:"#908878",marginTop:8,textAlign:"center"}},"Click 'reseed' · Watch order emerge")
+        )
+      )
+    )),
+
+    // ═══ CONTRIBUTE ═══
+    e(Fade,{style:{padding:secPad,background:"linear-gradient(180deg,transparent,rgba(96,108,56,0.03),transparent)"}},
+      e("div",{style:{maxWidth:800,margin:"0 auto",textAlign:"center"}},
+        e("p",{style:{fontFamily:M,fontSize:isMobile?11:11,color:G,letterSpacing:"0.2em",marginBottom:12}},"OPEN SOURCE"),
+        e("h2",{style:{fontSize:isMobile?"clamp(24px,6.5vw,32px)":"clamp(28px,4vw,44px)",lineHeight:1.15,fontWeight:400,marginBottom:12}},
+          "Built in the open. ",e("span",{style:{fontStyle:"italic",color:G}},"Join the loop.")
+        ),
+        e("p",{style:{fontFamily:S,fontSize:isMobile?14:16,fontStyle:"italic",color:"#888",maxWidth:480,margin:"0 auto "+(isMobile?"24px":"32px"),lineHeight:1.7}},
+          "Selfware is MIT licensed. Contributions, bug reports, and ideas are welcome."
+        ),
+        e("div",{style:{display:"grid",gridTemplateColumns:isMobile?"1fr":"repeat(3,1fr)",gap:isMobile?10:14,marginBottom:isMobile?28:36}},
+          ...[
+            {icon:"🐛",label:"Report a bug",href:"https://github.com/architehc/selfware/issues/new",desc:"Found something? Open an issue."},
+            {icon:"🔀",label:"Submit a PR",href:"https://github.com/architehc/selfware/pulls",desc:"Code, docs, tests — all welcome."},
+            {icon:"💬",label:"Discussions",href:"https://github.com/architehc/selfware/discussions",desc:"Ideas, questions, show & tell."},
+          ].map((c,i)=>e("a",{key:i,href:c.href,target:"_blank",rel:"noopener",style:{background:"rgba(0,0,0,0.25)",border:"1px solid rgba(96,108,56,0.15)",borderRadius:10,padding:isMobile?16:20,textDecoration:"none",textAlign:"center",transition:"border-color 0.3s"}},
+            e("div",{style:{fontSize:isMobile?20:24,marginBottom:8}},c.icon),
+            e("div",{style:{fontFamily:M,fontSize:isMobile?11:12,color:G,marginBottom:6,letterSpacing:"0.04em"}},c.label),
+            e("div",{style:{fontFamily:S,fontSize:isMobile?12:13,color:"#888",lineHeight:1.5,fontStyle:"italic"}},c.desc)
+          ))
+        ),
+        // Email signup
+        e("div",{style:{borderTop:"1px solid rgba(212,163,115,0.08)",paddingTop:isMobile?24:32}},
+          e("p",{style:{fontFamily:S,fontSize:isMobile?18:22,color:"#e8e0d0",marginBottom:6,fontWeight:400}},"Join the inner loop."),
+          e("p",{style:{fontFamily:S,fontSize:isMobile?13:15,fontStyle:"italic",color:"#a09880",marginBottom:isMobile?14:18,lineHeight:1.6}},
+            "Evolution logs, benchmark drops, hardware guides. The signal, not the noise."
+          ),
+          e(EmailForm,{mobile:isMobile}),
+          e("p",{style:{fontFamily:M,fontSize:9,color:"#908878",marginTop:10}},"No spam. Stored locally on this server. Your data never leaves.")
+        )
+      )
+    ),
+
+    // ═══ FOOTER ═══
+    e("footer",{style:{padding:isMobile?"24px 20px":"32px 40px",borderTop:"1px solid rgba(212,163,115,0.06)",display:"flex",justifyContent:isMobile?"center":"space-between",alignItems:"center",fontFamily:M,fontSize:isMobile?11:10,color:"#908878",flexWrap:"wrap",gap:isMobile?14:12,textAlign:isMobile?"center":"left"}},
+      e("div",{style:{display:"flex",alignItems:"center",gap:8}},"🦊 selfware.design"),
+      e("div",{style:{display:"flex",gap:16}},
+        ...[["github","https://github.com/architehc/selfware"],["crates.io","https://crates.io/crates/selfware"],["docs","https://docs.rs/selfware"]].map(([l,u])=>e("a",{key:l,href:u,target:"_blank",rel:"noopener",style:{color:"#908878",textDecoration:"none"}},l))
+      ),
+      !isMobile&&e("div",{style:{letterSpacing:"0.04em"}},"software you own · software that lasts")
+    )
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(e(App));
+</script>
+</body>
+</html>

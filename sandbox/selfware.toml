@@ -1,0 +1,26 @@
+endpoint = "http://host.containers.internal:8000/v1"
+model = "Qwen/Qwen3.5-4B"
+max_tokens = 32768
+temperature = 0.6
+
+[safety]
+allowed_paths = ["/workspace", "/workspace/**", "/home/trial", "/home/trial/**"]
+denied_paths = ["**/.env", "**/secrets/**", "**/.ssh/**", "/etc/**", "/usr/**"]
+
+[agent]
+max_iterations = 30
+step_timeout_secs = 120
+native_function_calling = false
+
+[yolo]
+enabled = true
+max_operations = 100
+max_hours = 0.25
+
+[continuous_work]
+enabled = false
+
+[retry]
+max_retries = 3
+base_delay_ms = 1000
+max_delay_ms = 30000
