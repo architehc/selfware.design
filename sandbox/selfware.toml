@@ -11,7 +11,7 @@ allowed_paths = ["/workspace", "/workspace/**", "/home/trial", "/home/trial/**"]
 denied_paths = ["**/.env", "**/secrets/**", "**/.ssh/**", "/etc/**", "/usr/**"]
 
 [agent]
-max_iterations = 30
+max_iterations = 50
 step_timeout_secs = 120
 native_function_calling = false
 
