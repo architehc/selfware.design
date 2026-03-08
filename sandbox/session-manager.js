@@ -86,6 +86,12 @@ function createSessionManager(httpServer, options = {}) {
         session.ptyProcess.write(msg.data);
       } else if (msg.type === "resize" && session.ptyProcess && msg.cols && msg.rows) {
         try { session.ptyProcess.resize(msg.cols, msg.rows); } catch {}
+      } else if (msg.type === "demo-select" && session.ptyProcess && msg.demo) {
+        // Switch to selected demo directory and show README
+        const allowed = ["demo-1-bugs", "demo-2-security", "demo-3-tests", "demo-4-feature"];
+        if (allowed.includes(msg.demo)) {
+          session.ptyProcess.write(`cd /workspace/${msg.demo} && cat README.md\n`);
+        }
       }
     });
 
@@ -148,8 +154,8 @@ function createSessionManager(httpServer, options = {}) {
       const containerId = await podmanRun(opts);
       session.containerId = containerId;
 
-      // Copy sample project into workspace
-      await podmanExec(containerId, "cp", "-r", "/home/trial/sample-project", "/workspace/sample-project");
+      // Copy demos and guide into workspace
+      await podmanExec(containerId, "bash", "-c", "cp -r /home/trial/demos/* /workspace/ && cp /home/trial/GUIDE.md /workspace/GUIDE.md");
       await podmanExec(containerId, "chown", "-R", "trial:trial", "/workspace");
 
       // Spawn PTY

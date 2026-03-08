@@ -16,7 +16,7 @@
 html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',monospace;overflow:hidden}
 
 /* ─── Header ─── */
-.header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(212,163,115,0.1);background:rgba(12,15,8,0.95);position:relative;z-index:10}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(212,163,115,0.1);background:rgba(12,15,8,0.95);position:relative;z-index:10;height:49px}
 .header a{color:#D4A373;text-decoration:none;font-size:13px;letter-spacing:0.06em}
 .header a:hover{color:#e8e0d0}
 .logo{font-family:'Instrument Serif',Georgia,serif;font-size:18px;color:#e8e0d0;text-decoration:none!important}
@@ -42,18 +42,75 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
 .auth-error{color:#c44;font-size:11px;height:16px;margin-top:4px}
 .auth-note{font-size:10px;color:#6e6e5a;margin-top:24px;max-width:360px;line-height:1.6}
 
+/* ─── Showcase Carousel ─── */
+.showcase{margin-top:32px;max-width:560px;width:100%}
+.showcase-title{font-size:11px;color:#908878;letter-spacing:0.1em;margin-bottom:12px}
+.showcase-cards{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.showcase-cards::-webkit-scrollbar{display:none}
+.showcase-card{flex:0 0 170px;background:rgba(232,224,208,0.04);border:1px solid rgba(212,163,115,0.1);border-radius:8px;padding:12px;text-align:left;transition:border-color 0.2s}
+.showcase-card:hover{border-color:rgba(212,163,115,0.3)}
+.showcase-card .sc-icon{font-size:20px;margin-bottom:6px}
+.showcase-card .sc-label{font-size:11px;color:#D4A373;margin-bottom:4px}
+.showcase-card .sc-desc{font-size:10px;color:#6e6e5a;line-height:1.5}
+
 /* ─── Queue Screen ─── */
 .queue-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 49px);text-align:center}
 .queue-pos{font-size:64px;color:#D4A373;font-family:'Instrument Serif',Georgia,serif}
 .queue-label{font-size:13px;color:#908878;letter-spacing:0.08em;margin-top:8px}
 .queue-info{font-size:11px;color:#6e6e5a;margin-top:24px}
 
-/* ─── Terminal ─── */
-.terminal-wrap{height:calc(100vh - 49px);padding:4px;position:relative}
-.terminal-wrap .xterm{height:100%}
+/* ─── Main Workspace (split-pane) ─── */
+.workspace{display:flex;height:calc(100vh - 49px - 42px);position:relative}
+
+/* Terminal pane */
+.terminal-pane{flex:1;min-width:0;padding:4px;position:relative}
+.terminal-pane .xterm{height:100%}
 .xterm-viewport::-webkit-scrollbar{width:6px}
 .xterm-viewport::-webkit-scrollbar-track{background:transparent}
 .xterm-viewport::-webkit-scrollbar-thumb{background:rgba(212,163,115,0.2);border-radius:3px}
+
+/* Visual panel */
+.visual-panel{width:30%;min-width:240px;max-width:380px;border-left:1px solid rgba(212,163,115,0.1);display:flex;flex-direction:column;overflow:hidden;background:rgba(12,15,8,0.6)}
+
+/* Activity feed */
+.panel-section{padding:10px 12px;border-bottom:1px solid rgba(212,163,115,0.06)}
+.panel-section-title{font-size:9px;color:#908878;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
+.activity-feed{max-height:200px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(212,163,115,0.2) transparent}
+.activity-feed::-webkit-scrollbar{width:4px}
+.activity-feed::-webkit-scrollbar-thumb{background:rgba(212,163,115,0.15);border-radius:2px}
+.activity-item{display:flex;align-items:flex-start;gap:6px;padding:3px 0;font-size:10px;color:#a09880;animation:fadeSlide 0.3s ease-out}
+.activity-item .ai-icon{flex-shrink:0;width:14px;text-align:center;font-size:11px}
+.activity-item .ai-text{line-height:1.4;word-break:break-word}
+.activity-item.success .ai-icon{color:#606C38}
+.activity-item.error .ai-icon{color:#c44}
+.activity-item.info .ai-icon{color:#D4A373}
+.activity-item.thinking .ai-icon{color:#5a7a9a}
+
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+
+/* Screenshot gallery */
+.gallery{display:flex;flex-wrap:wrap;gap:6px}
+.gallery-thumb{width:72px;height:48px;border-radius:4px;border:1px solid rgba(212,163,115,0.15);cursor:pointer;object-fit:cover;transition:border-color 0.2s;animation:fadeIn 0.3s ease-out}
+.gallery-thumb:hover{border-color:rgba(212,163,115,0.5)}
+@keyframes fadeIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.stat-item{background:rgba(232,224,208,0.03);border-radius:4px;padding:6px 8px;text-align:center}
+.stat-val{font-size:16px;color:#D4A373;font-variant-numeric:tabular-nums}
+.stat-label{font-size:8px;color:#908878;letter-spacing:0.08em;margin-top:2px}
+
+/* ─── Demo Tabs ─── */
+.demo-tabs{display:flex;height:42px;border-top:1px solid rgba(212,163,115,0.1);background:rgba(12,15,8,0.95);align-items:center;padding:0 8px;gap:4px;flex-shrink:0}
+.demo-tab{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:6px;font-size:11px;color:#908878;cursor:pointer;transition:all 0.2s;border:1px solid transparent;letter-spacing:0.02em;white-space:nowrap}
+.demo-tab:hover{color:#e8e0d0;background:rgba(232,224,208,0.04)}
+.demo-tab.active{color:#D4A373;background:rgba(212,163,115,0.08);border-color:rgba(212,163,115,0.2)}
+.demo-tab .dt-num{font-weight:500;color:#D4A373;opacity:0.6}
+.demo-tab.active .dt-num{opacity:1}
+
+/* ─── Lightbox ─── */
+.lightbox{position:fixed;inset:0;background:rgba(12,15,8,0.92);display:flex;align-items:center;justify-content:center;z-index:200;cursor:pointer;animation:fadeIn 0.2s}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;border:1px solid rgba(212,163,115,0.2)}
 
 /* ─── Ended Overlay ─── */
 .ended-overlay{position:fixed;inset:0;background:rgba(12,15,8,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;text-align:center}
@@ -68,11 +125,18 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:12px;color:#908878;margin-top:12px;letter-spacing:0.06em}
 
-@media(max-width:600px){
+/* ─── Responsive ─── */
+@media(max-width:768px){
+  .workspace{flex-direction:column}
+  .terminal-pane{flex:1;min-height:50vh}
+  .visual-panel{width:100%;max-width:none;min-width:0;border-left:none;border-top:1px solid rgba(212,163,115,0.1);max-height:40vh;overflow-y:auto}
+  .demo-tabs{overflow-x:auto;scrollbar-width:none}
+  .demo-tabs::-webkit-scrollbar{display:none}
   .auth-form{flex-direction:column;align-items:center}
   .auth-form input{width:100%;max-width:280px}
   .auth-title{font-size:28px}
   .header{padding:10px 16px}
+  .showcase-cards{flex-wrap:nowrap}
 }
 </style>
 </head>
@@ -103,7 +167,23 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
   let fitAddon = null;
   let sessionStart = null;
   let timerInterval = null;
+  let activeDemo = "demo-1-bugs";
   const SESSION_MAX = 15 * 60; // seconds
+
+  // ─── Activity feed state ──────────────────────────────────
+  const activityItems = [];
+  const screenshots = [];
+  let stepCount = 0;
+  let filesChanged = 0;
+  let testsPassed = 0;
+
+  // ─── Demo definitions ────────────────────────────────────
+  const DEMOS = [
+    { id: "demo-1-bugs", num: 1, name: "Bugs", desc: "Fix 3 bugs in weather CLI" },
+    { id: "demo-2-security", num: 2, name: "Security", desc: "Audit 4 vulnerabilities" },
+    { id: "demo-3-tests", num: 3, name: "Tests", desc: "Generate unit tests" },
+    { id: "demo-4-feature", num: 4, name: "Feature", desc: "Implement search function" },
+  ];
 
   // ─── Render ─────────────────────────────────────────────────
   function render() {
@@ -120,7 +200,7 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
         <div class="auth-title">Try Selfware</div>
         <div class="auth-sub">
           Get an instant terminal with selfware pre-configured.
-          Analyze code, fix bugs, and see AI-driven development in action.
+          Choose from 4 demos: fix bugs, audit security, generate tests, or build a feature.
         </div>
         <form class="auth-form" id="auth-form">
           <input type="email" id="email-input" placeholder="your@email.com" required autocomplete="email" />
@@ -130,6 +210,31 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
         <div class="auth-note">
           Session lasts 15 min. No signup required.<br>
           Your email is only used for rate limiting.
+        </div>
+        <div class="showcase">
+          <div class="showcase-title">WHAT YOU CAN TRY</div>
+          <div class="showcase-cards">
+            <div class="showcase-card">
+              <div class="sc-icon">🐛</div>
+              <div class="sc-label">Bug Fixing</div>
+              <div class="sc-desc">Watch selfware find and fix 3 bugs in a weather CLI, then verify with tests.</div>
+            </div>
+            <div class="showcase-card">
+              <div class="sc-icon">🔒</div>
+              <div class="sc-label">Security Audit</div>
+              <div class="sc-desc">Selfware identifies hardcoded secrets, path traversal, and unsafe memory access.</div>
+            </div>
+            <div class="showcase-card">
+              <div class="sc-icon">🧪</div>
+              <div class="sc-label">Test Generation</div>
+              <div class="sc-desc">Generate comprehensive tests with edge cases for 5 string utility functions.</div>
+            </div>
+            <div class="showcase-card">
+              <div class="sc-icon">🔧</div>
+              <div class="sc-label">Build a Feature</div>
+              <div class="sc-desc">Implement a search function from a README spec in a mini-grep CLI.</div>
+            </div>
+          </div>
         </div>
       </div>`;
     $("auth-form").addEventListener("submit", handleStart);
@@ -162,9 +267,37 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
   }
 
   function renderTerminal() {
-    app.innerHTML = '<div class="terminal-wrap" id="terminal-container"></div>';
+    app.innerHTML = `
+      <div class="workspace" id="workspace">
+        <div class="terminal-pane" id="terminal-container"></div>
+        <div class="visual-panel" id="visual-panel">
+          <div class="panel-section">
+            <div class="panel-section-title">Activity</div>
+            <div class="activity-feed" id="activity-feed"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-section-title">Screenshots</div>
+            <div class="gallery" id="gallery"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-section-title">Stats</div>
+            <div class="stats-grid" id="stats-grid">
+              <div class="stat-item"><div class="stat-val" id="stat-steps">0</div><div class="stat-label">STEPS</div></div>
+              <div class="stat-item"><div class="stat-val" id="stat-files">0</div><div class="stat-label">FILES</div></div>
+              <div class="stat-item"><div class="stat-val" id="stat-tests">0</div><div class="stat-label">TESTS</div></div>
+              <div class="stat-item"><div class="stat-val" id="stat-time">0:00</div><div class="stat-label">ELAPSED</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-tabs" id="demo-tabs"></div>`;
+
     statusBar.innerHTML = '<span class="status-dot green"></span> Connected';
 
+    // Render demo tabs
+    renderDemoTabs();
+
+    // Init xterm
     term = new Terminal({
       fontFamily: "'DM Mono', 'Menlo', 'DejaVu Sans Mono', monospace",
       fontSize: 14,
@@ -216,9 +349,7 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
       sendMsg({ type: "resize", cols, rows });
     });
 
-    window.addEventListener("resize", () => {
-      if (fitAddon) fitAddon.fit();
-    });
+    window.addEventListener("resize", handleResize);
 
     // Start countdown
     sessionStart = Date.now();
@@ -228,8 +359,31 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
     term.focus();
   }
 
+  function handleResize() {
+    if (fitAddon) fitAddon.fit();
+  }
+
+  function renderDemoTabs() {
+    const tabsEl = $("demo-tabs");
+    if (!tabsEl) return;
+    tabsEl.innerHTML = DEMOS.map(d => `
+      <div class="demo-tab${d.id === activeDemo ? ' active' : ''}" data-demo="${d.id}">
+        <span class="dt-num">${d.num}</span> ${d.name}
+      </div>
+    `).join("");
+    tabsEl.querySelectorAll(".demo-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        const demo = tab.dataset.demo;
+        activeDemo = demo;
+        renderDemoTabs();
+        sendMsg({ type: "demo-select", demo });
+      });
+    });
+  }
+
   function renderEnded(reason) {
     if (timerInterval) clearInterval(timerInterval);
+    window.removeEventListener("resize", handleResize);
     timerEl.textContent = "";
     statusBar.innerHTML = '<span class="status-dot red"></span> Ended';
 
@@ -253,6 +407,173 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
     const sec = remaining % 60;
     timerEl.textContent = `${min}:${String(sec).padStart(2, "0")}`;
     if (remaining <= 60) timerEl.style.color = "#c44";
+
+    // Update elapsed stat
+    const elapsedStat = $("stat-time");
+    if (elapsedStat) {
+      const em = Math.floor(elapsed / 60);
+      const es = elapsed % 60;
+      elapsedStat.textContent = `${em}:${String(es).padStart(2, "0")}`;
+    }
+  }
+
+  // ─── Activity Feed Parser ─────────────────────────────────
+  // Buffer for accumulating terminal output text (stripped of ANSI)
+  let outputBuffer = "";
+
+  function stripAnsi(str) {
+    return str.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, "").replace(/\x1b\][^\x07]*\x07/g, "");
+  }
+
+  function parseActivityFromOutput(raw) {
+    const text = stripAnsi(raw);
+    outputBuffer += text;
+
+    // Process complete lines
+    const lines = outputBuffer.split("\n");
+    // Keep the last incomplete line in the buffer
+    outputBuffer = lines.pop() || "";
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+
+      // Step markers
+      if (/📝\s*Step\s+(\d+)/i.test(trimmed)) {
+        const m = trimmed.match(/📝\s*Step\s+(\d+)/i);
+        stepCount = parseInt(m[1], 10);
+        addActivity("info", "⟳", `Step ${stepCount} executing...`);
+        updateStats();
+        captureScreenshot();
+      }
+      // Read file
+      else if (/✔\s*Read\s+(.+)/i.test(trimmed)) {
+        const m = trimmed.match(/✔\s*Read\s+(.+)/i);
+        addActivity("success", "✔", `Read ${m[1].trim()}`);
+      }
+      // Edited file
+      else if (/✔\s*Edit(?:ed)?\s+(.+)/i.test(trimmed)) {
+        const m = trimmed.match(/✔\s*Edit(?:ed)?\s+(.+)/i);
+        addActivity("success", "✎", `Edited ${m[1].trim()}`);
+        filesChanged++;
+        updateStats();
+      }
+      // Wrote file
+      else if (/✔\s*Wro?te?\s+(.+)/i.test(trimmed)) {
+        const m = trimmed.match(/✔\s*Wro?te?\s+(.+)/i);
+        addActivity("success", "✎", `Wrote ${m[1].trim()}`);
+        filesChanged++;
+        updateStats();
+      }
+      // Tests passed
+      else if (/test result:.*(\d+)\s+passed/i.test(trimmed)) {
+        const m = trimmed.match(/(\d+)\s+passed/i);
+        testsPassed = parseInt(m[1], 10);
+        addActivity("success", "✔", `Tests: ${testsPassed} passed`);
+        updateStats();
+        captureScreenshot();
+      }
+      // Verification
+      else if (/✔\s*Verification/i.test(trimmed)) {
+        addActivity("success", "✔", "Verification passed");
+        captureScreenshot();
+      }
+      else if (/✕\s*Verification/i.test(trimmed)) {
+        addActivity("error", "✕", "Verification failed");
+        captureScreenshot();
+      }
+      // Thinking
+      else if (/^Thinking:/i.test(trimmed)) {
+        const thought = trimmed.slice(9).trim().slice(0, 60);
+        addActivity("thinking", "🧠", thought || "...");
+      }
+      // Bash / command execution
+      else if (/✔\s*Bash\s*\(/i.test(trimmed) || /✔\s*Ran\s+/i.test(trimmed)) {
+        addActivity("success", "▶", trimmed.slice(0, 60));
+      }
+      // Found bugs/issues
+      else if (/found\s+(\d+)\s+(bug|issue|vulnerabilit)/i.test(trimmed)) {
+        const m = trimmed.match(/found\s+(\d+)\s+(bug|issue|vulnerabilit\w*)/i);
+        addActivity("info", "🔍", `Found ${m[1]} ${m[2]}${parseInt(m[1]) > 1 ? "s" : ""}`);
+      }
+      // Fixed
+      else if (/✔\s*Fixed/i.test(trimmed)) {
+        addActivity("success", "✔", trimmed.slice(0, 60));
+      }
+    }
+  }
+
+  function addActivity(type, icon, text) {
+    activityItems.push({ type, icon, text });
+    // Keep max 50 items
+    if (activityItems.length > 50) activityItems.shift();
+    renderActivityFeed();
+  }
+
+  function renderActivityFeed() {
+    const feed = $("activity-feed");
+    if (!feed) return;
+    // Only render last 20 for performance
+    const items = activityItems.slice(-20);
+    feed.innerHTML = items.map(item =>
+      `<div class="activity-item ${item.type}"><span class="ai-icon">${item.icon}</span><span class="ai-text">${escHtml(item.text)}</span></div>`
+    ).join("");
+    feed.scrollTop = feed.scrollHeight;
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function updateStats() {
+    const s = $("stat-steps");
+    const f = $("stat-files");
+    const t = $("stat-tests");
+    if (s) s.textContent = stepCount;
+    if (f) f.textContent = filesChanged;
+    if (t) t.textContent = testsPassed;
+  }
+
+  // ─── Screenshot Auto-Capture ──────────────────────────────
+  function captureScreenshot() {
+    if (!term) return;
+    // xterm.js renders to canvas elements inside the terminal container
+    const container = $("terminal-container");
+    if (!container) return;
+    const canvas = container.querySelector("canvas");
+    if (!canvas) return;
+
+    try {
+      const dataUrl = canvas.toDataURL("image/png");
+      screenshots.push(dataUrl);
+      // Keep max 12 screenshots
+      if (screenshots.length > 12) screenshots.shift();
+      renderGallery();
+    } catch (e) {
+      // Canvas may be tainted or unavailable
+    }
+  }
+
+  function renderGallery() {
+    const gallery = $("gallery");
+    if (!gallery) return;
+    gallery.innerHTML = screenshots.map((src, i) =>
+      `<img class="gallery-thumb" src="${src}" alt="Screenshot ${i + 1}" data-idx="${i}" />`
+    ).join("");
+    gallery.querySelectorAll(".gallery-thumb").forEach(img => {
+      img.addEventListener("click", () => showLightbox(img.src));
+    });
+  }
+
+  function showLightbox(src) {
+    const lb = document.createElement("div");
+    lb.className = "lightbox";
+    lb.innerHTML = `<img src="${src}" alt="Screenshot" />`;
+    lb.addEventListener("click", () => lb.remove());
+    document.addEventListener("keydown", function handler(e) {
+      if (e.key === "Escape") { lb.remove(); document.removeEventListener("keydown", handler); }
+    });
+    document.body.appendChild(lb);
   }
 
   // ─── Auth ───────────────────────────────────────────────────
@@ -321,7 +642,11 @@ html,body{height:100%;background:#0c0f08;color:#e8e0d0;font-family:'DM Mono',mon
           break;
 
         case "output":
-          if (term) term.write(msg.data);
+          if (term) {
+            term.write(msg.data);
+            // Parse for activity feed
+            parseActivityFromOutput(msg.data);
+          }
           break;
 
         case "queue":

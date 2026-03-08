@@ -16,8 +16,9 @@ COPY selfware.toml /home/trial/.config/selfware/config.toml
 RUN chown -R trial:trial /home/trial
 
 COPY welcome.sh /etc/profile.d/welcome.sh
-COPY sample-project /home/trial/sample-project
-RUN chown -R trial:trial /home/trial/sample-project
+COPY demos /home/trial/demos
+COPY GUIDE.md /home/trial/GUIDE.md
+RUN chown -R trial:trial /home/trial/demos /home/trial/GUIDE.md
 
 ENV SELFWARE_MODE=yolo
 
